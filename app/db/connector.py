@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
@@ -49,11 +51,18 @@ class PostgresConnector:
         )
 
     def create_session(self):
+        # TODO доработать сессию как асинхронный менеджер
         return sessionmaker(
             self.engine,
             class_=AsyncSession,
             expire_on_commit=False
         )
+
+    @asynccontextmanager
+    async def get_session(self):
+        """Get an async session using context manager."""
+        async with self.async_session() as session:
+            yield session
 
     def close(self):
         if self.engine:

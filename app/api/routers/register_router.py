@@ -26,16 +26,18 @@ async def choose_timezone_handler(message: Message, state: FSMContext, texts: di
             reply_markup=ReplyKeyBoard().create_kb(texts["reply_buttons"]["timezones"])
         )
 
-    is_success = await UserController.register_user(
+    is_new_user_registered = await UserController.register_user(
         tg_id=message.from_user.id,
         name=message.from_user.full_name,
         timezone=timezone
     )
-    await LimitsController.init_limits(
-        tg_id=message.from_user.id
-    )
-    if is_success:
+
+    if is_new_user_registered:
+        await LimitsController.init_limits(
+            tg_id=message.from_user.id
+        )
         timezone_message = texts["register_texts"]["done"]
+
     else:
         timezone_message = texts["register_texts"]["already_done"]
     await state.clear()

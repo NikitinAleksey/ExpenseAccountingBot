@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Column, Integer, DECIMAL, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, DECIMAL, ForeignKey, DateTime, BigInteger
 from sqlalchemy.orm import relationship, declared_attr
 
 from app.db.models.base import Base
@@ -27,7 +27,6 @@ __all__ = [
     'DevicesArticle',
     'TransportArticle',
     'ServicesArticle',
-    # 'Total',
 ]
 
 
@@ -35,14 +34,14 @@ class BaseArticle(Base):
     __abstract__ = True
 
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.tg_id'), nullable=False)
+    user_id = Column(BigInteger, ForeignKey('users.tg_id', ondelete='CASCADE'), nullable=False)
 
     summ = Column(DECIMAL(10, 2), nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     @declared_attr
     def user(cls):
-        return relationship("User", backref=cls.__tablename__)
+        return relationship("User", backref=cls.__tablename__, passive_deletes=True)
 
 
 class AlcoholArticle(BaseArticle):

@@ -8,6 +8,7 @@ from aiogram.types import Message, CallbackQuery
 from app.api.servises.fsm.states import TimezoneStates, StatisticStates
 from app.api.servises.kb_builders.inline_kb import InlineKeyBoard
 from app.api.servises.kb_builders.reply_kb import ReplyKeyBoard
+from app.api.controller.user_controller import UserController
 
 
 __all__ = [
@@ -33,8 +34,17 @@ async def start_handler(event: Union[Message, CallbackQuery], state: FSMContext,
 @commands_router.message(Command('statistic'))
 async def statistic_handler(event: Union[Message, CallbackQuery], state: FSMContext, texts: dict):
     await state.clear()
-    statistic_message = texts["commands"]["statistic"]
+    user = await UserController.get_user(tg_id=event.from_user.id)
     message = event.message if isinstance(event, CallbackQuery) else event
+
+    if not user:
+        return await message.answer(
+            text=texts['statistic_texts']['user_not_found'],
+            reply_markup=InlineKeyBoard.create_kb(buttons=texts['inline_buttons']['not_registered_yet'])
+        )
+
+    await state.set_data({'user': user})
+    statistic_message = texts["commands"]["statistic"]
     await state.set_state(StatisticStates.waiting_for_report_type)
     return await message.answer(
         text=statistic_message,

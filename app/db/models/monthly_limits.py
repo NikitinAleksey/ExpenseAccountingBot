@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Date, UniqueConstraint, Integer, ForeignKey
+from sqlalchemy import Column, Date, UniqueConstraint, Integer, ForeignKey, DECIMAL, BigInteger
 from sqlalchemy.orm import relationship
 
 from app.db.models.base import Base
@@ -8,14 +8,14 @@ __all__ = ['MonthlyLimits']
 
 
 def get_field():
-    return Column(Integer, nullable=True, default=0)
+    return Column(DECIMAL, nullable=True, default=0)
 
 
 class MonthlyLimits(Base):
     __tablename__ = 'monthly_limits'
 
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.tg_id'), nullable=False)
+    user_id = Column(BigInteger, ForeignKey('users.tg_id'), nullable=False)
 
     alcohol = get_field()
     charity = get_field()

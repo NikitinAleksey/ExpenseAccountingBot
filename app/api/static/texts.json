@@ -12,7 +12,7 @@
       ["Добавить лимиты", "limits"],
       ["Изменить часовой пояс", "change_timezone"],
       ["Статистика", "statistic"],
-      ["Отчет", "report"],
+      ["Зарегистрироваться", "register"],
       ["Скрыть", "hide"]
     ],
     "statistic": {
@@ -38,6 +38,9 @@
         ["Назад", "statistic"]
       ]
     },
+    "not_registered_yet": [
+      ["Зарегистрироваться", "register"]
+    ],
 
     "insert_yes_no": [
       ["Да", "insert"],
@@ -154,7 +157,9 @@
     },
     "group_type": "Отчет будет сформирован в период {start} - {end}\nВыберите способ группировки отчета",
     "period_group_type": "Выберите период для группировки отчета",
-    "got_all_parameters": "Отлично! Отчет скоро будет готов. Пока попей чаю со сладкими французскими булками, я тебе напишу."
+    "got_all_parameters": "Отлично! Отчет скоро будет готов. Пока попей чаю со сладкими французскими булками, я тебе напишу.",
+    "user_not_found": "Такого пользователя нет в системе. Зарегистрируйтесь!",
+    "report_is_done": "Ваш файл готов!"
   },
   "register_texts": {
     "already_done": "Вы уже зарегистрированы! Можете начинать работу.",
@@ -194,5 +199,47 @@
         "start": null,
         "end": null
       }
+  },
+  "mapping_rus_to_eng": {
+    "алкоголь": "alcohol",
+    "благотворительность": "charity",
+    "долги и кредиты": "debts",
+    "домашнее хозяйство": "household",
+    "еда вне дома": "eating_out",
+    "здоровье": "health",
+    "косметика и уход": "cosmetics_and_care",
+    "образование": "education",
+    "питомцы": "pets",
+    "покупки": "purchases",
+    "продукты": "products",
+    "путешествия": "travel",
+    "развлечения": "entertainment",
+    "семья и друзья": "friends_and_family",
+    "сигареты": "cigarettes",
+    "спорт": "sport",
+    "техника": "devices",
+    "транспорт": "transport",
+    "услуги": "services"
+  },
+  "mapping_rus_to_classname": {
+    "алкоголь": "AlcoholArticle",
+    "благотворительность": "CharityArticle",
+    "долги и кредиты": "DebtsArticle",
+    "домашнее хозяйство": "HouseholdArticle",
+    "еда вне дома": "EatingOutArticle",
+    "здоровье": "HealthArticle",
+    "косметика и уход": "CosmeticsAndCareArticle",
+    "образование": "EducationArticle",
+    "питомцы": "PetsArticle",
+    "покупки": "PurchasesArticle",
+    "продукты": "ProductsArticle",
+    "путешествия": "TravelArticle",
+    "развлечения": "EntertainmentArticle",
+    "семья и друзья": "FriendsAndFamilyArticle",
+    "сигареты": "CigarettesArticle",
+    "спорт": "SportArticle",
+    "техника": "DevicesArticle",
+    "транспорт": "TransportArticle",
+    "услуги": "ServicesArticle"
   }
 }
