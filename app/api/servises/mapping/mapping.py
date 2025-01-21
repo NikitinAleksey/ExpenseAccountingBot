@@ -1,25 +1,16 @@
-from app.db.models.expense_articles import (
-    AlcoholArticle,
-    CharityArticle,
-    DebtsArticle,
-    HouseholdArticle,
-    EatingOutArticle,
-    HealthArticle,
-    CosmeticsAndCareArticle,
-    EducationArticle,
-    PetsArticle,
-    PurchasesArticle,
-    ProductsArticle,
-    TravelArticle,
-    EntertainmentArticle,
-    FriendsAndFamilyArticle,
-    CigarettesArticle,
-    SportArticle,
-    DevicesArticle,
-    TransportArticle,
-    ServicesArticle,
-)
 from app.api.servises.texts.texts import texts
+from app.db.models.expense_articles import (AlcoholArticle, CharityArticle,
+                                            CigarettesArticle,
+                                            CosmeticsAndCareArticle,
+                                            DebtsArticle, DevicesArticle,
+                                            EatingOutArticle, EducationArticle,
+                                            EntertainmentArticle,
+                                            FriendsAndFamilyArticle,
+                                            HealthArticle, HouseholdArticle,
+                                            PetsArticle, ProductsArticle,
+                                            PurchasesArticle, ServicesArticle,
+                                            SportArticle, TransportArticle,
+                                            TravelArticle)
 
 
 class ExpenseArticleMapping:

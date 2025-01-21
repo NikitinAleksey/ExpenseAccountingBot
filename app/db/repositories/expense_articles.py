@@ -1,14 +1,14 @@
 from datetime import datetime
-from typing import Type, Literal
+from typing import Literal, Type
 
+from sqlalchemy import and_, delete, desc, func, literal, union
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from sqlalchemy import delete, desc, and_, func, literal, union
 from sqlalchemy.orm import selectinload
 
+from app import logged
 from app.db import Base
 from app.db.repositories.base import BaseRepository
-from app import logged
 
 
 @logged()

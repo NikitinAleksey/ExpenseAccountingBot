@@ -1,9 +1,7 @@
 import os
 
 from app.api.servises.report_builders import BaseBuilder
-
 from app.utils import logged
-
 
 __all__ = ["XMLBuilder"]
 

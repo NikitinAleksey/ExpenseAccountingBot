@@ -1,8 +1,7 @@
-from sqlalchemy import Column, Integer, String, BigInteger
+from sqlalchemy import BigInteger, Column, Integer, String
 from sqlalchemy.orm import relationship
 
 from app.db.models.base import Base
-
 
 __all__ = ["User"]
 

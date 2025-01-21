@@ -1,12 +1,11 @@
 from typing import Type
 
-from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
 
 from app import logged
 from app.db.models.user import User
 from app.db.repositories.base import BaseRepository
-
 
 __all__ = ["UserRepository"]
 

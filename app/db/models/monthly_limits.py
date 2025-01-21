@@ -1,16 +1,8 @@
-from sqlalchemy import (
-    Column,
-    Date,
-    UniqueConstraint,
-    Integer,
-    ForeignKey,
-    DECIMAL,
-    BigInteger,
-)
+from sqlalchemy import (DECIMAL, BigInteger, Column, Date, ForeignKey, Integer,
+                        UniqueConstraint)
 from sqlalchemy.orm import relationship
 
 from app.db.models.base import Base
-
 
 __all__ = ["MonthlyLimits"]
 

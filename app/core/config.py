@@ -1,8 +1,7 @@
 import os
 
-import pydantic_settings
 import pydantic
-
+import pydantic_settings
 
 __all__ = ["settings"]
 

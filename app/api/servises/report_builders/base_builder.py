@@ -5,7 +5,6 @@ import pandas as pd
 
 from app.utils import logged
 
-
 __all__ = ["BaseBuilder"]
 
 

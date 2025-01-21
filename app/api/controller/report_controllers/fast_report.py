@@ -1,14 +1,13 @@
 from datetime import datetime
-from typing import Type, Callable
+from typing import Callable, Type
 
 from sqlalchemy.orm import sessionmaker
 from tabulate import tabulate
 
-from app.utils import logged
 from app.db import BaseArticle, MonthlyLimits
 from app.db.repositories.expense_articles import ExpenseArticleRepository
 from app.db.repositories.monthly_limits import LimitsRepository
-
+from app.utils import logged
 
 __all__ = ["FastReport"]
 

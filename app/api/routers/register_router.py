@@ -1,14 +1,14 @@
-from aiogram import Router, F
+from aiogram import F, Router
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 
-from app.api.servises.kb_builders.reply_kb import ReplyKeyBoard
-from app.api.servises.kb_builders.inline_kb import InlineKeyBoard
-from app.api.servises.fsm.states import TimezoneStates
-from app.api.routers.commands_router import start_handler
-from app.api.controller.user_controller import UserController
 from app.api.controller.limits_controller import LimitsController
+from app.api.controller.user_controller import UserController
+from app.api.routers.commands_router import start_handler
+from app.api.servises.fsm.states import TimezoneStates
+from app.api.servises.kb_builders.inline_kb import InlineKeyBoard
+from app.api.servises.kb_builders.reply_kb import ReplyKeyBoard
 from app.api.servises.timezone.timezone_service import parse_timezone
 
 __all__ = ["register_router"]

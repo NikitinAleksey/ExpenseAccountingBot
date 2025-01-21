@@ -1,14 +1,13 @@
 import asyncio
 import functools
-from typing import Callable, Dict, Any, Awaitable
+from typing import Any, Awaitable, Callable, Dict
 from unittest.mock import _SentinelObject
 
 from aiogram.dispatcher.middlewares.base import BaseMiddleware
-from aiogram.types import TelegramObject, Message
 from aiogram.fsm.storage.base import BaseStorage, StorageKey
+from aiogram.types import Message, TelegramObject
 
 from app.utils import logged
-
 
 __all__ = ["StorageMiddleware", "DeletePreviousMSGMiddleware"]
 

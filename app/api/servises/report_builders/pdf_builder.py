@@ -1,16 +1,15 @@
 import os
 
-from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
-from reportlab.platypus import Paragraph
+from reportlab.platypus import (Paragraph, SimpleDocTemplate, Spacer, Table,
+                                TableStyle)
 
-from app.utils import logged
 from app.api.servises.report_builders import BaseBuilder
-
+from app.utils import logged
 
 __all__ = ["PDFBuilder"]
 

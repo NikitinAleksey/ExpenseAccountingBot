@@ -3,12 +3,9 @@ from typing import Any
 
 from pydantic import BaseModel, Field, field_validator
 
-from app.api.servises.mapping.mapping import (
-    ExpenseArticleMapping,
-    ExpenseLimitsArticleMapping,
-)
+from app.api.servises.mapping.mapping import (ExpenseArticleMapping,
+                                              ExpenseLimitsArticleMapping)
 from app.api.servises.texts.texts import texts
-
 
 months = {
     "январь": 1,

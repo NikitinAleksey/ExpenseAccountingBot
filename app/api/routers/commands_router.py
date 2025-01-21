@@ -1,15 +1,14 @@
 from typing import Union
 
-from aiogram import Router, F
+from aiogram import F, Router
 from aiogram.filters import Command, CommandStart
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import CallbackQuery, Message
 
-from app.api.servises.fsm.states import TimezoneStates, StatisticStates
+from app.api.controller.user_controller import UserController
+from app.api.servises.fsm.states import StatisticStates, TimezoneStates
 from app.api.servises.kb_builders.inline_kb import InlineKeyBoard
 from app.api.servises.kb_builders.reply_kb import ReplyKeyBoard
-from app.api.controller.user_controller import UserController
-
 
 __all__ = ["commands_router", "start_handler"]
 

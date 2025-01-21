@@ -1,8 +1,7 @@
-from sqlalchemy import Column, Integer, DECIMAL, ForeignKey, UniqueConstraint
+from sqlalchemy import DECIMAL, Column, ForeignKey, Integer, UniqueConstraint
 from sqlalchemy.orm import relationship
 
 from app.db.models.base import Base
-
 
 __all__ = ["BaseArticle"]
 

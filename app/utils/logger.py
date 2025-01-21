@@ -1,7 +1,6 @@
 import logging
-from functools import wraps
 import os
-
+from functools import wraps
 
 __all__ = ["logged"]
 

@@ -1,16 +1,16 @@
 import asyncio
 
 from api.bot import create_bot
-from core.config import settings
+from api.middleware.middlewares import (DeletePreviousMSGMiddleware,
+                                        StorageMiddleware)
 from api.routers.commands_router import commands_router
-from api.routers.statistic_router import statistic_router
-from api.routers.insert_router import insert_router
 from api.routers.delete_router import delete_router
+from api.routers.insert_router import insert_router
 from api.routers.limits_router import limits_router
 from api.routers.register_router import register_router
+from api.routers.statistic_router import statistic_router
 from api.servises.texts.texts import texts
-from api.middleware.middlewares import StorageMiddleware, DeletePreviousMSGMiddleware
-
+from core.config import settings
 
 routers_list = [
     commands_router,

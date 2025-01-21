@@ -1,9 +1,7 @@
 from typing import Any
 
-from aiogram import Bot, Dispatcher
+from aiogram import BaseMiddleware, Bot, Dispatcher, Router
 from aiogram.fsm.storage.memory import MemoryStorage, StorageKey
-from aiogram import Router, BaseMiddleware
-
 
 __all__ = ["create_bot"]
 

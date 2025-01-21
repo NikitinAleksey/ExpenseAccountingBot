@@ -1,13 +1,13 @@
-from aiogram import Router, F
+from aiogram import F, Router
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, CallbackQuery, BufferedInputFile, FSInputFile
+from aiogram.types import (BufferedInputFile, CallbackQuery, FSInputFile,
+                           Message)
 
-from app.api.servises.fsm.states import StatisticStates
-from app.api.servises.kb_builders.reply_kb import ReplyKeyBoard
-from app.api.servises.kb_builders.inline_kb import InlineKeyBoard
 from app.api.controller.statistic_controller import StatisticController
-
+from app.api.servises.fsm.states import StatisticStates
+from app.api.servises.kb_builders.inline_kb import InlineKeyBoard
+from app.api.servises.kb_builders.reply_kb import ReplyKeyBoard
 
 __all__ = ["statistic_router"]
 

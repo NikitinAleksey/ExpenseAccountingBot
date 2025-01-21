@@ -1,16 +1,16 @@
 from collections import defaultdict
 from copy import copy
 from datetime import datetime
-from typing import Literal, Type, Callable
+from typing import Callable, Literal, Type
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import sessionmaker
 
-from app.api.servises import XLSXBuilder, PDFBuilder, XMLBuilder
+from app.api.servises import PDFBuilder, XLSXBuilder, XMLBuilder
+from app.db import Base, BaseArticle, MonthlyLimits
 from app.db.repositories.expense_articles import ExpenseArticleRepository
 from app.db.repositories.monthly_limits import LimitsRepository
 from app.utils import logged
-from app.db import BaseArticle, MonthlyLimits, Base
 
 __all__ = ["ParametrizedReport"]
 

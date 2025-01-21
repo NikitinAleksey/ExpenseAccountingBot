@@ -1,10 +1,10 @@
 from datetime import datetime
 
-from sqlalchemy import Column, Integer, DECIMAL, ForeignKey, DateTime, BigInteger
-from sqlalchemy.orm import relationship, declared_attr
+from sqlalchemy import (DECIMAL, BigInteger, Column, DateTime, ForeignKey,
+                        Integer)
+from sqlalchemy.orm import declared_attr, relationship
 
 from app.db.models.base import Base
-
 
 __all__ = [
     "BaseArticle",

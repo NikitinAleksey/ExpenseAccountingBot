@@ -1,6 +1,5 @@
 import json
 
-
 __all__ = ["load_texts"]
 
 
