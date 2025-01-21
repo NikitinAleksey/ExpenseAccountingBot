@@ -17,13 +17,13 @@ from app.db.models.expense_articles import (
     SportArticle,
     DevicesArticle,
     TransportArticle,
-    ServicesArticle
+    ServicesArticle,
 )
 from app.api.servises.texts.texts import texts
 
 
 class ExpenseArticleMapping:
-    data = texts['mapping_rus_to_classname']
+    data = texts["mapping_rus_to_classname"]
 
     @classmethod
     def get_class_from_article_name(cls, article_name: str):
@@ -35,7 +35,7 @@ class ExpenseArticleMapping:
 
 
 class ExpenseLimitsArticleMapping:
-    data = texts['mapping_rus_to_eng']
+    data = texts["mapping_rus_to_eng"]
 
     @classmethod
     def get_field_name_from_article_name(cls, article_name: str):

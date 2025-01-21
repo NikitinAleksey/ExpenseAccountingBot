@@ -4,9 +4,7 @@ import pydantic_settings
 import pydantic
 
 
-__all__ = [
-    'settings'
-]
+__all__ = ["settings"]
 
 
 class Settings(pydantic_settings.BaseSettings):
@@ -24,7 +22,7 @@ class Settings(pydantic_settings.BaseSettings):
     DEBUG: bool
 
     class Config:
-        env_file = os.path.abspath(os.path.join('..', '.env'))
+        env_file = os.path.abspath(os.path.join("..", ".env"))
 
 
 settings = Settings()

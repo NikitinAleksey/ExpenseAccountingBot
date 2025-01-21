@@ -6,9 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 from app.core.config import settings
 
-__all__ = [
-    'PostgresConnector'
-]
+__all__ = ["PostgresConnector"]
 
 
 class PostgresConnector:
@@ -34,12 +32,12 @@ class PostgresConnector:
 
     def url_builder(self):
         return (
-            f'postgresql+asyncpg://'
-            f'{self.postgres_user}:'
-            f'{self.postgres_password}@'
-            f'{self.postgres_host}:'
-            f'{self.postgres_port}/'
-            f'{self.postgres_db_name}'
+            f"postgresql+asyncpg://"
+            f"{self.postgres_user}:"
+            f"{self.postgres_password}@"
+            f"{self.postgres_host}:"
+            f"{self.postgres_port}/"
+            f"{self.postgres_db_name}"
         )
 
     def create_engine(self):
@@ -47,16 +45,12 @@ class PostgresConnector:
             self.db_url,
             echo=self.echo,
             pool_size=self.pool_size,
-            max_overflow=self.max_overflow
+            max_overflow=self.max_overflow,
         )
 
     def create_session(self):
         # TODO доработать сессию как асинхронный менеджер
-        return sessionmaker(
-            self.engine,
-            class_=AsyncSession,
-            expire_on_commit=False
-        )
+        return sessionmaker(self.engine, class_=AsyncSession, expire_on_commit=False)
 
     @asynccontextmanager
     async def get_session(self):

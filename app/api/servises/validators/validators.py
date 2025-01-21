@@ -3,7 +3,10 @@ from typing import Any
 
 from pydantic import BaseModel, Field, field_validator
 
-from app.api.servises.mapping.mapping import ExpenseArticleMapping, ExpenseLimitsArticleMapping
+from app.api.servises.mapping.mapping import (
+    ExpenseArticleMapping,
+    ExpenseLimitsArticleMapping,
+)
 from app.api.servises.texts.texts import texts
 
 
@@ -26,19 +29,21 @@ months = {
 class ArticleValidator(BaseModel):
     article: str = Field(...)
 
-    @field_validator('article')
+    @field_validator("article")
     def validate_article(cls, value):
         value = value.lower()
         allowed_expense_articles = ExpenseArticleMapping.data.keys()
         if value not in allowed_expense_articles:
-            raise ValueError("Статья расходов должна быть одной из имеющихся в списке ниже. Выберите статью:")
+            raise ValueError(
+                "Статья расходов должна быть одной из имеющихся в списке ниже. Выберите статью:"
+            )
         return value
 
 
 class InsertValidator(ArticleValidator):
     amount: str = Field(...)
 
-    @field_validator('amount')
+    @field_validator("amount")
     def validate_amount(cls, value):
         try:
             value = float(value)
@@ -55,19 +60,23 @@ class DeleteValidator(ArticleValidator):
 
 
 class LimitsValidator(InsertValidator):
-    @field_validator('article')
+    @field_validator("article")
     def validate_article(cls, value):
         value = value.lower()
-        article_name = ExpenseLimitsArticleMapping.get_field_name_from_article_name(article_name=value)
+        article_name = ExpenseLimitsArticleMapping.get_field_name_from_article_name(
+            article_name=value
+        )
         if not article_name:
-            raise ValueError("Статья лимитов должна быть одной из имеющихся в списке ниже. Выберите статью:")
+            raise ValueError(
+                "Статья лимитов должна быть одной из имеющихся в списке ниже. Выберите статью:"
+            )
         return article_name
 
 
 class YearValidator(BaseModel):
     year: Any
 
-    @field_validator('year')
+    @field_validator("year")
     def validate_year(cls, value):
         try:
             value = int(value)
@@ -81,9 +90,9 @@ class YearValidator(BaseModel):
 class MonthValidator(BaseModel):
     month: Any
 
-    @field_validator('month')
+    @field_validator("month")
     def validate_month(cls, value):
-        if value not in texts['reply_buttons']['months']:
+        if value not in texts["reply_buttons"]["months"]:
             raise ValueError("Месяц должен быть месяцем, ало. Выберите месяц:")
         month_number = months.get(value.lower())
         return month_number
@@ -94,11 +103,11 @@ class DayValidator(BaseModel):
     month: int = Field(...)
     day: Any
 
-    @field_validator('day')
+    @field_validator("day")
     def validate_day(cls, value, values):
         data = values.data
-        year = data['year']
-        month = data['month']
+        year = data["year"]
+        month = data["month"]
 
         try:
             value = int(value)
@@ -111,6 +120,8 @@ class DayValidator(BaseModel):
         max_days = calendar.monthrange(year, month)[1]
 
         if not 1 <= value <= max_days:
-            raise ValueError(f"Некорректный день. Для {month:02}.{year} максимум {max_days} дней.")
+            raise ValueError(
+                f"Некорректный день. Для {month:02}.{year} максимум {max_days} дней."
+            )
 
         return value

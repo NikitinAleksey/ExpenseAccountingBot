@@ -18,17 +18,16 @@ routers_list = [
     insert_router,
     delete_router,
     limits_router,
-    register_router
+    register_router,
 ]
 
-middlewares = [
-    StorageMiddleware,
-    DeletePreviousMSGMiddleware
-]
+middlewares = [StorageMiddleware, DeletePreviousMSGMiddleware]
 
 
 async def start_bot(token: str):
-    bot, dp = await create_bot(token=token, routers=routers_list, middlewares=middlewares, texts=texts)
+    bot, dp = await create_bot(
+        token=token, routers=routers_list, middlewares=middlewares, texts=texts
+    )
     await dp.start_polling(bot)
 
 

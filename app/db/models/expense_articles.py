@@ -7,26 +7,26 @@ from app.db.models.base import Base
 
 
 __all__ = [
-    'BaseArticle',
-    'AlcoholArticle',
-    'CharityArticle',
-    'DebtsArticle',
-    'HouseholdArticle',
-    'EatingOutArticle',
-    'HealthArticle',
-    'CosmeticsAndCareArticle',
-    'EducationArticle',
-    'PetsArticle',
-    'PurchasesArticle',
-    'ProductsArticle',
-    'TravelArticle',
-    'EntertainmentArticle',
-    'FriendsAndFamilyArticle',
-    'CigarettesArticle',
-    'SportArticle',
-    'DevicesArticle',
-    'TransportArticle',
-    'ServicesArticle',
+    "BaseArticle",
+    "AlcoholArticle",
+    "CharityArticle",
+    "DebtsArticle",
+    "HouseholdArticle",
+    "EatingOutArticle",
+    "HealthArticle",
+    "CosmeticsAndCareArticle",
+    "EducationArticle",
+    "PetsArticle",
+    "PurchasesArticle",
+    "ProductsArticle",
+    "TravelArticle",
+    "EntertainmentArticle",
+    "FriendsAndFamilyArticle",
+    "CigarettesArticle",
+    "SportArticle",
+    "DevicesArticle",
+    "TransportArticle",
+    "ServicesArticle",
 ]
 
 
@@ -34,7 +34,9 @@ class BaseArticle(Base):
     __abstract__ = True
 
     id = Column(Integer, primary_key=True)
-    user_id = Column(BigInteger, ForeignKey('users.tg_id', ondelete='CASCADE'), nullable=False)
+    user_id = Column(
+        BigInteger, ForeignKey("users.tg_id", ondelete="CASCADE"), nullable=False
+    )
 
     summ = Column(DECIMAL(10, 2), nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -45,80 +47,79 @@ class BaseArticle(Base):
 
 
 class AlcoholArticle(BaseArticle):
-    __tablename__ = 'alcohol'
-
+    __tablename__ = "alcohol"
 
 
 class CharityArticle(BaseArticle):
-    __tablename__ = 'charity'
+    __tablename__ = "charity"
 
 
 class DebtsArticle(BaseArticle):
-    __tablename__ = 'debts'
+    __tablename__ = "debts"
 
 
 class HouseholdArticle(BaseArticle):
-    __tablename__ = 'household'
+    __tablename__ = "household"
 
 
 class EatingOutArticle(BaseArticle):
-    __tablename__ = 'eating_out'
+    __tablename__ = "eating_out"
 
 
 class HealthArticle(BaseArticle):
-    __tablename__ = 'health'
+    __tablename__ = "health"
 
 
 class CosmeticsAndCareArticle(BaseArticle):
-    __tablename__ = 'cosmetics_and_care'
+    __tablename__ = "cosmetics_and_care"
 
 
 class EducationArticle(BaseArticle):
-    __tablename__ = 'education'
+    __tablename__ = "education"
 
 
 class PetsArticle(BaseArticle):
-    __tablename__ = 'pets'
+    __tablename__ = "pets"
 
 
 class PurchasesArticle(BaseArticle):
-    __tablename__ = 'purchases'
+    __tablename__ = "purchases"
 
 
 class ProductsArticle(BaseArticle):
-    __tablename__ = 'products'
+    __tablename__ = "products"
 
 
 class TravelArticle(BaseArticle):
-    __tablename__ = 'travel'
+    __tablename__ = "travel"
 
 
 class EntertainmentArticle(BaseArticle):
-    __tablename__ = 'entertainment'
+    __tablename__ = "entertainment"
 
 
 class FriendsAndFamilyArticle(BaseArticle):
-    __tablename__ = 'friends_and_family'
+    __tablename__ = "friends_and_family"
 
 
 class CigarettesArticle(BaseArticle):
-    __tablename__ = 'cigarettes'
+    __tablename__ = "cigarettes"
 
 
 class SportArticle(BaseArticle):
-    __tablename__ = 'sport'
+    __tablename__ = "sport"
 
 
 class DevicesArticle(BaseArticle):
-    __tablename__ = 'devices'
+    __tablename__ = "devices"
 
 
 class TransportArticle(BaseArticle):
-    __tablename__ = 'transport'
+    __tablename__ = "transport"
 
 
 class ServicesArticle(BaseArticle):
-    __tablename__ = 'services'
+    __tablename__ = "services"
 
 
 # class Total(BaseArticle):

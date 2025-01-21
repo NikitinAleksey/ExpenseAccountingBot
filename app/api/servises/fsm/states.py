@@ -2,11 +2,11 @@ from aiogram.fsm.state import StatesGroup, State
 
 
 __all__ = [
-    'InsertStates',
-    'DeleteStates',
-    'LimitsStates',
-    'TimezoneStates',
-    'StatisticStates'
+    "InsertStates",
+    "DeleteStates",
+    "LimitsStates",
+    "TimezoneStates",
+    "StatisticStates",
 ]
 
 

@@ -1,10 +1,18 @@
-from sqlalchemy import Column, Date, UniqueConstraint, Integer, ForeignKey, DECIMAL, BigInteger
+from sqlalchemy import (
+    Column,
+    Date,
+    UniqueConstraint,
+    Integer,
+    ForeignKey,
+    DECIMAL,
+    BigInteger,
+)
 from sqlalchemy.orm import relationship
 
 from app.db.models.base import Base
 
 
-__all__ = ['MonthlyLimits']
+__all__ = ["MonthlyLimits"]
 
 
 def get_field():
@@ -12,10 +20,10 @@ def get_field():
 
 
 class MonthlyLimits(Base):
-    __tablename__ = 'monthly_limits'
+    __tablename__ = "monthly_limits"
 
     id = Column(Integer, primary_key=True)
-    user_id = Column(BigInteger, ForeignKey('users.tg_id'), nullable=False)
+    user_id = Column(BigInteger, ForeignKey("users.tg_id"), nullable=False)
 
     alcohol = get_field()
     charity = get_field()
@@ -37,7 +45,5 @@ class MonthlyLimits(Base):
     transport = get_field()
     services = get_field()
 
-    user = relationship('User', backref='monthly_limits')
-    __table_args__ = (
-        UniqueConstraint('user_id', name='uq_user_monthly_limits'),
-    )
+    user = relationship("User", backref="monthly_limits")
+    __table_args__ = (UniqueConstraint("user_id", name="uq_user_monthly_limits"),)

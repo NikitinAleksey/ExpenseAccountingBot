@@ -3,5 +3,5 @@ from app.api.controller.statistic_controller import StatisticController
 
 
 __all__ = [
-    'BaseController',
+    "BaseController",
 ]
