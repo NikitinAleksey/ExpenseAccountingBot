@@ -5,6 +5,6 @@ __all__ = [
     'BaseBuilder',
     'JPGBuilder',
     'PDFBuilder',
-    'XLSBuilder',
+    'XLSXBuilder',
     'XMLBuilder',
 ]

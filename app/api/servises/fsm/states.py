@@ -48,4 +48,6 @@ class StatisticStates(StatesGroup):
     got_dates = State()
 
     waiting_for_group_type = State()
+    waiting_for_file_type = State()
+
     got_all_data = State()

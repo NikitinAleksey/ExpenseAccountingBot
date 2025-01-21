@@ -3,7 +3,7 @@ from typing import Type, Literal
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from sqlalchemy import delete, desc, and_, func, text, table, column, literal_column, MetaData, Table, Column, Integer
+from sqlalchemy import delete, desc, and_, func, literal, union
 from sqlalchemy.orm import selectinload
 
 from app.db import Base
@@ -51,69 +51,76 @@ class ExpenseArticleRepository(BaseRepository):
         return result.scalar_one()
 
     @classmethod
-    async def get_aggregated_articles_by_start_end_period(cls, session: AsyncSession, tg_id: int, model: Type[Base],
-                                                          start: datetime, end: datetime):
-        cls.log.info(f'Метод get_aggregated_articles_by_start_end_period. Получение суммы затрат для {tg_id=}, {model=}'
-                     f' за период {start}-{end} .')
-        stmt = select(func.sum(model.summ)).where(
-            and_(
-                model.user_id == tg_id,
-                model.updated_at >= start,
-                model.updated_at <= end
+    async def get_aggregated_articles_by_start_end_period(cls, session: AsyncSession, tg_id: int, models: list[Type[Base]],
+                                                          start: datetime, end: datetime, dates_str_without_timezone: str):
+        cls.log.info(f'Метод get_aggregated_articles_by_start_end_period. Получение суммы затрат для {tg_id=}'
+                     f' за период {start} - {end} .')
+        queries = []
+
+        for model in models:
+            stmt = select(
+                literal(dates_str_without_timezone),
+                func.sum(model.summ),
+                literal(model.__tablename__)
+            ).where(
+                and_(
+                    model.user_id == tg_id,
+                    model.updated_at.between(start, end)
+                )
             )
-        )
-        result = await session.execute(stmt)
-        return result.scalar_one()
+            queries.append(stmt)
+        combined_query = union(*queries)
+        result = await session.execute(combined_query)
+        return result.fetchall()
 
     @classmethod
     async def get_aggregated_articles_by_start_end_period_by_months(cls, session: AsyncSession, tg_id: int,
-                                                                   model: Type[Base],  periods: list[tuple]):
+                                                                    models: list[Type[Base]], start: datetime,
+                                                                    end: datetime):
         cls.log.info(
-            f'Метод get_aggregated_articles_by_start_end_period_by_months. Получение суммы затрат для tg_id={tg_id}.')
-        result = (
-            await session.execute(
-                session.query(
-                    func.extract('year', model.updated_at).label('year'),
-                    func.extract('month', model.updated_at).label('month'),
-                    func.sum(model.summ).label('total_sum')
-                )
-                .filter(
-                    model.user_id == tg_id,  # Фильтрация по user_id (tg_id)
-                    # Добавляем фильтрацию по каждому периоду
-                    *[
-                        (func.extract('year', model.updated_at) == period[0]) &
-                        (func.extract('month', model.updated_at) == period[1])
-                        for period in periods
-                    ]
-                )
-                .group_by(
-                    func.extract('year', model.updated_at),
-                    func.extract('month', model.updated_at)
+            f'Метод get_aggregated_articles_by_start_end_period_by_months. Получение суммы затрат для tg_id={tg_id} за период {start}-{end}.')
+
+        queries = []
+        for model in models:
+            stmt = select(
+                func.to_char(model.updated_at, 'YYYY-MM'),
+                model.summ,
+                literal(model.__tablename__)
+            ).where(
+                and_(
+                    model.user_id == tg_id,
+                    model.updated_at.between(start, end)
                 )
             )
-        )
-        return result
+            queries.append(stmt)
+        combined_query = union(*queries)
+        result = await session.execute(combined_query)
+        return result.fetchall()
 
     @classmethod
     async def get_aggregated_articles_by_start_end_period_by_years(cls, session: AsyncSession, tg_id: int,
-                                                                    model: Type[Base], periods: list[tuple]):
+                                                                   models: list[Type[Base]], start: datetime,
+                                                                   end: datetime):
         cls.log.info(
-            f'Метод get_aggregated_articles_by_start_end_period_by_months. Получение суммы затрат для tg_id={tg_id}.')
-        stmt = select(
-            func.extract('year', model.updated_at).label('year'),
-            func.sum(model.summ).label('total_summ')
-        ).where(
-            and_(
-                model.user_id == tg_id,
-                model.updated_at >= start,
-                model.updated_at <= end
+            f'Метод get_aggregated_articles_by_start_end_period_by_years. Получение суммы затрат для tg_id={tg_id} за период {start} - {end}.')
+        queries = []
+
+        for model in models:
+            stmt = select(
+                func.to_char(model.updated_at, 'YYYY'),
+                model.summ,
+                literal(model.__tablename__)
+            ).where(
+                and_(
+                    model.user_id == tg_id,
+                    model.updated_at.between(start, end)
+                )
             )
-        ).group_by(
-            func.extract('year', model.updated_at)
-        ).order_by(
-            'year DESC'
-        )
-        result = await session.execute(stmt)
+
+            queries.append(stmt)
+
+        combined_query = union(*queries)
+        result = await session.execute(combined_query)
         return result.fetchall()
 
     @classmethod
@@ -129,16 +136,3 @@ class ExpenseArticleRepository(BaseRepository):
         await session.delete(item)
         await session.commit()
         return item
-
-    # @classmethod
-    # async def _temp_periods_table(cls, periods: list[tuple]):
-    #     metadata = MetaData()
-    #
-    #     periods_table = Table(
-    #         'periods',
-    #         metadata,
-    #         Column('year', Integer),
-    #         Column('month', Integer)
-    #     )
-    #
-    #     return periods_table

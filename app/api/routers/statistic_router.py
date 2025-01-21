@@ -60,7 +60,8 @@ async def statistic_start_year_handler(callback: CallbackQuery, state: FSMContex
 
     controller = StatisticController(
         tg_id=callback.from_user.id,
-        mapping=texts['mapping_rus_to_eng'],
+        mapping=texts['mapping_eng_to_rus'],
+        template=texts['parametrized_report_template'],
         report_type='parametrized',
         user=user
     )
@@ -250,12 +251,11 @@ async def statistic_got_dates_handler(message: Message, state: FSMContext, texts
     F.data == 'period_group_type'
 )
 async def statistic_period_group_type_handler(callback: CallbackQuery, state: FSMContext, texts: dict):
-    # TODO добавить с тжет дата щапись о периоде - какой период выбран для группировки
     data = await state.get_data()
     controller = data.get('controller')
     controller.set_group_type(group_type=callback.data)
 
-    await state.set_state(StatisticStates.got_all_data)
+    await state.set_state(StatisticStates.waiting_for_file_type)
 
     return await callback.message.answer(
         text=texts['statistic_texts']['period_group_type'],
@@ -272,16 +272,31 @@ async def statistic_article_group_type_handler(callback: CallbackQuery, state: F
     controller = data.get('controller')
     controller.set_group_type(group_type=callback.data)
 
+    await state.set_state(StatisticStates.waiting_for_file_type)
+    return await statistic_file_type_handler(callback, state, texts)
+
+
+@statistic_router.callback_query(StateFilter(StatisticStates.waiting_for_file_type))
+async def statistic_file_type_handler(callback: CallbackQuery, state: FSMContext, texts: dict):
+    data = await state.get_data()
+    controller = data.get('controller')
+    if controller.group_type != callback.data:
+        controller.set_group_type_period(group_type_period=callback.data)
+
     await state.set_state(StatisticStates.got_all_data)
-    return await statistic_launch_report_handler(callback, state, texts)
+
+    return await callback.message.answer(
+        text=texts['statistic_texts']['file_type'],
+        reply_markup=InlineKeyBoard.create_kb(buttons=texts['inline_buttons']['file_type'], adjust=3)
+    )
 
 
 @statistic_router.callback_query(StateFilter(StatisticStates.got_all_data))
 async def statistic_launch_report_handler(callback: CallbackQuery, state: FSMContext, texts: dict):
     data = await state.get_data()
     controller = data.get('controller')
-    if controller.group_type != callback.data:
-        controller.set_group_type_period(group_type_period=callback.data)
+    if not controller.file_type:
+        controller.set_file_type(file_type=callback.data)
 
     file_path = await controller.get_report()
     await state.set_data({})
@@ -291,11 +306,3 @@ async def statistic_launch_report_handler(callback: CallbackQuery, state: FSMCon
         document=FSInputFile(file_path),
         reply_markup=InlineKeyBoard.create_kb(buttons=texts['inline_buttons']['ok'])
     )
-
-
-# TODO - настроить нормально систему формирования дат:
-#  3. ДОБАВИТЬ ПРОВЕПКУ НА ТО, ЧТО ПОЛЬЗОВАТЕЛЬ ЗАРЕГАН!!! ЭТО НУЖНО НЕ ДЛЯ ВСЕХ РОУТОВ, А ТОЛЬКО ДЛЯ добавления/изменения/удаления/чтения
-#  4. НАПИСАН ОТЧЕТ ПО СТАТЬЯМ - его исправить, чтобы был указан период и написать отчет по периодам (так же указать периоды)
-#  5. И написать мидлварь, которая будет удалять файл из контейнера сразу после отправки
-#  6. Я знаю, что уже начались дебри, но это почти конец. Осталось не так много, а потом рефакторинг и ТЕСТЫ (блядь,
-#  учись писать тесты с самого начала, иначе времени уходит пиздец, и с логами так же)

@@ -26,16 +26,18 @@ class StatisticController(BaseController):
     _month_validator = MonthValidator
     _day_validator = DayValidator
 
-    def __init__(self, tg_id: int, mapping: dict, report_type: Literal['fast', 'parametrized'], user: User):
+    def __init__(self, tg_id: int, mapping: dict, report_type: Literal['fast', 'parametrized'], user: User, template: dict = None):
         self.tg_id = tg_id
         self.start = datetime(year=2024, month=1, day=1)
-        self.end = datetime(year=2024, month=12, day=31)
+        self.end = datetime(year=datetime.utcnow().year, month=12, day=31)
         self.user = user
         self.report_type = report_type
         self.target_state = None
         self.group_type = None
         self.group_type_period = None
         self.mapping = mapping
+        self.template = template
+        self.file_type = None
 
     def set_year(self, year: str, edge: Literal['start', 'end']):
         self.log.debug(f'Метод set_year. Устанавливаем год {year=} для {edge=}')
@@ -85,6 +87,9 @@ class StatisticController(BaseController):
 
         self.group_type = group_type
 
+    def set_file_type(self, file_type: str):
+        self.file_type = file_type
+
     def set_group_type_period(self, group_type_period: str):
         self.log.debug(f'Метод set_group_type_period. Устанавливаем {group_type_period=} для {self.group_type=}')
         self.group_type_period = group_type_period
@@ -131,19 +136,27 @@ class StatisticController(BaseController):
 
         elif self.report_type == 'parametrized':
             self.log.info(f'Метод get_report. Генерация параметризованного отчета для {self.tg_id=}.')
+            current = datetime.utcnow()
+            self.end = self.end if self.end < current else current
+            dates_str_without_timezone = f'{self.start.strftime("%d.%m.%Y")}-{self.end.strftime("%d.%m.%Y")}'
             self.start = self._from_utc_to_timezone_dt(timezone=self.user.timezone, utc_datetime=self.start)
+
             self.end = self._from_utc_to_timezone_dt(timezone=self.user.timezone, utc_datetime=self.end)
 
-            return await ParametrizedReport.get_parametrized_report(
+            report = ParametrizedReport(
                 tg_id=self.tg_id,
                 mapping=self.mapping,
+                template=self.template,
                 models=models,
                 async_session=async_session,
                 start=self.start,
                 end=self.end,
+                dates_str_without_timezone=dates_str_without_timezone,
                 group_type=self.group_type,
-                group_type_period=self.group_type_period
+                group_type_period=self.group_type_period,
+                file_type=self.file_type
             )
+            return await report.launch()
 
         else:
             self.log.error(f'Метод get_report. Неверный тип отчета: {self.report_type}.')

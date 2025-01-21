@@ -1,10 +1,12 @@
+from collections import defaultdict
+from copy import copy
 from datetime import datetime
 from typing import Literal, Type, Callable
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import sessionmaker
 
-from app.api.servises import XLSBuilder
+from app.api.servises import XLSXBuilder, PDFBuilder, XMLBuilder
 from app.db.repositories.expense_articles import ExpenseArticleRepository
 from app.db.repositories.monthly_limits import LimitsRepository
 from app.utils import logged
@@ -19,45 +21,111 @@ class ParametrizedReport:
     _limits_repository: Type[LimitsRepository] = LimitsRepository
     _limits_model: Type[MonthlyLimits] = MonthlyLimits
 
-    @classmethod
-    async def get_parametrized_report(
-            cls,
+    def __init__(
+            self,
             tg_id: int,
             mapping: dict,
-            models: list[Type[BaseArticle]],
+            template: dict,
+            models: list[BaseArticle],
             async_session: Callable[[], sessionmaker],
             start: datetime,
             end: datetime,
+            dates_str_without_timezone: str,
             group_type: Literal['article_group_type', 'period_group_type'],
-            group_type_period: Literal['year_group_type', 'month_group_type'] = None
+            group_type_period: Literal['year_group_type', 'month_group_type'],
+            file_type: str
     ):
-        cls.log.info(
-            f'Метод get_parametrized_report. Запуск отчета c параметрами для {tg_id=}, {start=}, {end=} {group_type=}.')
-        expenses, limits = await cls._build_data_for_parametrized_report(
-            tg_id=tg_id,
-            models=models,
-            async_session=async_session,
-            start=start,
-            end=end,
-            group_type=group_type,
-            group_type_period=group_type_period
-        )
-        cls.log.debug(f'В ПАРАМЕТРИЗИРОВАННОМ ЗАПРОСЕ ПОЛУЧИЛИ: \n{expenses=}\n{limits=}')
-        data = cls._build_parametrized_report_data(expenses=expenses, limits=limits, mapping=mapping)
-        # TODO подумать, как лучше: передавать дату в контроллер, там уточнять, какой тип файла нужен, и с контроллера
-        #  вызывать нужный метод /// или сразу тут его вызывать??? Пока вызываю прям тут, но скорее всего надо поменять.
+        self.tg_id = tg_id
+        self.mapping = mapping
+        self.template = template
+        self.models = models
+        self.session = async_session
+        self.start = start
+        self.end = end
+        self.dates_str_without_timezone = dates_str_without_timezone
+        self.group_type = group_type
+        self.group_type_method = getattr(self, self.group_type)
+        self.group_type_period = group_type_period
+        self.file_type_method = getattr(self, file_type)
 
-        file_path = XLSBuilder(data=data, tg_id=tg_id).launch()
+    async def launch(self):
+        self.log.info(f'Метод get_parametrized_report. '
+                      f'Запуск отчета c параметрами для {self.tg_id=}, {self.start=}, {self.end=} {self.group_type_method=}.')
+        expenses, limits = await self._get_expenses_and_limits()
+        expenses, limits = self._translate(expenses=expenses, limits=limits)
+        self.log.debug(f'В ПАРАМЕТРИЗИРОВАННОМ ЗАПРОСЕ ПОЛУЧИЛИ: \n{expenses=}\n{limits=}')
+        self.log.debug(f'Метод get_parametrized_report. Builder: {self.file_type_method}')
+
+        builder = self.file_type_method()
+        file_path = builder(expenses=expenses, limits=limits, tg_id=self.tg_id).generate_report()
         return file_path
 
-    @classmethod
-    def _build_parametrized_report_data(cls, expenses: dict, limits: dict, mapping: dict):
+    async def _get_expenses_and_limits(self):
+        async with self.session as session:
+            limits = await self._limits(session=session)
+            expenses = await self.group_type_method(session=session)
+
+        return expenses, limits
+
+    async def _limits(self, session: AsyncSession):
+        if self.group_type == 'article_group_type':
+            months_quantity = self.months_between()
+        else:
+            if self.group_type_period == 'year_group_type':
+                months_quantity = 12
+            else:
+                months_quantity = 1
+
+        limits_record = await self._limits_repository.read(
+            session=session,
+            tg_id=self.tg_id,
+            model=self._limits_model
+        )
+        if limits_record:
+            limits = limits_record.__dict__
+            for key, val in limits.items():
+                if isinstance(val, int):
+                    limits[key] = val * months_quantity
+            self.log.debug(f'Метод limits. Лимиты для {self.tg_id=}: {limits}.')
+            return limits
+        else:
+            self.log.warning(f'Метод limits. Лимиты для {self.tg_id=} не найдены.')
+
+    def months_between(self):
+        delta_years = self.end.year - self.start.year
+        delta_months = self.end.month - self.start.month
+        quantity = delta_years * 12 + delta_months
+        return quantity if quantity > 0 else 1
+
+    async def article_group_type(self, session: AsyncSession):
+        self.log.debug(f'Метод article_group_type. Получаем сумму для моделей.')
+
+        expenses = await self._article_repository.get_aggregated_articles_by_start_end_period(
+            session=session,
+            tg_id=self.tg_id,
+            models=self.models,
+            start=self.start,
+            end=self.end,
+            dates_str_without_timezone=self.dates_str_without_timezone
+        )
+
+        return expenses
+
+    async def period_group_type(self, session: AsyncSession):
+        kwargs = {'session': session, 'tg_id': self.tg_id, 'models': self.models, 'start': self.start, 'end': self.end}
+
+        if self.group_type_period == 'year_group_type':
+            return await self._article_repository.get_aggregated_articles_by_start_end_period_by_years(**kwargs)
+        else:
+            return await self._article_repository.get_aggregated_articles_by_start_end_period_by_months(**kwargs)
+
+    def _build_article_report_data(cls, expenses: dict, limits: dict, mapping: dict, period: str):
         cls.log.debug(f'Метод _build_parametrized_report_data. Создаем словарь с затратами и лимитами.')
-        data = {}
+        data = {period: {}}
         for key, value in mapping.items():
             expense = expenses.get(value)
             limit = limits.get(value)
-            data[key.capitalize()] = {
+            data[period][key.capitalize()] = {
                 'Сумма затрат': expense if expenses else 0,
                 'Лимит': limit if limit else 0
             }
@@ -65,114 +133,29 @@ class ParametrizedReport:
 
         return data
 
-    @classmethod
-    async def _build_data_for_parametrized_report(
-            cls,
-            tg_id: int,
-            models: list[Type[BaseArticle]],
-            async_session: Callable[[], sessionmaker],
-            start: datetime,
-            end: datetime,
-            group_type: Literal['article_group_type', 'period_group_type'],
-            group_type_period: Literal['year_group_type', 'month_group_type'] = None
+    def _translate(self, expenses: list[tuple], limits: dict):
+        translated_expenses = []
+        for record in expenses:
+            translated_record = (*record[:-1], self.mapping[record[-1]])
+            translated_expenses.append(translated_record)
 
-    ):
-        async with async_session as session:
+        translated_limits = {}
+        for key, val in limits.items():
+            translated_key = self.mapping.get(key)
+            if translated_key:
+                translated_limits[translated_key] = val
 
-            if group_type == 'article_group_type':
-                expenses = await cls._article_group_type(
-                    session=session,
-                    tg_id=tg_id,
-                    start=start,
-                    end=end,
-                    models=models
-                )
+        return translated_expenses, translated_limits
 
-            elif group_type == 'period_group_type':
-                expenses = await cls._period_group_type(
-                    session=session,
-                    tg_id=tg_id,
-                    start=start,
-                    end=end,
-                    models=models,
-                    group_type_period=group_type_period
-                )
+    @staticmethod
+    def to_xml():
+        return XMLBuilder
 
-            limits = await cls._limits(tg_id=tg_id, session=session)
+    @staticmethod
+    def to_pdf():
+        return PDFBuilder
 
-        return expenses, limits
+    @staticmethod
+    def to_xlsx():
+        return XLSXBuilder
 
-    @classmethod
-    async def _article_group_type(cls, session: AsyncSession, tg_id: int, models: list[Type[BaseArticle]],
-                                  start: datetime, end: datetime):
-        expenses = {}
-        for model in models:
-            cls.log.debug(f'Метод article_group_type. Получаем сумму для модели {model.__tablename__}.')
-
-            amount = await cls._article_repository.get_aggregated_articles_by_start_end_period(
-                session=session,
-                tg_id=tg_id,
-                model=model,
-                start=start,
-                end=end
-            )
-            expenses[model.__tablename__] = int(amount) if amount else 0
-            cls.log.debug(f'Метод _article_group_type. '
-                          f'Сумма для модели {model.__tablename__}: '
-                          f'{expenses[model.__tablename__]}.')
-        return expenses
-
-    @classmethod
-    async def _period_group_type(cls, session: AsyncSession, tg_id: int, models: list[Type[BaseArticle]],
-                                 start: datetime, end: datetime,
-                                 group_type_period: Literal['year_group_type', 'month_group_type'] = None):
-        expenses = {}
-
-        if group_type_period is None or group_type_period == 'year_group_type':
-            for model in models:
-                group_by_years = await cls._article_repository.get_aggregated_articles_by_start_end_period_by_years(
-                    session=session,
-                    tg_id=tg_id,
-                    model=model,
-                    start=start,
-                    end=end
-                )
-                expenses[model.__tablename__] = group_by_years
-        else:
-            for model in models:
-                group_by_months = await cls._article_repository.get_aggregated_articles_by_start_end_period_by_months(
-                    session=session,
-                    tg_id=tg_id,
-                    model=model,
-                    start=start,
-                    end=end
-                )
-                expenses[model.__tablename__] = group_by_months
-
-        return expenses
-
-    @classmethod
-    async def _limits(cls, tg_id: int, session: AsyncSession):
-        limits_record = await cls._limits_repository.read(
-            session=session,
-            tg_id=tg_id,
-            model=cls._limits_model
-        )
-        if limits_record:
-            limits = limits_record.__dict__
-            cls.log.debug(f'Метод limits. Лимиты для {tg_id=}: {limits}.')
-            return limits
-        else:
-            cls.log.warning(f'Метод limits. Лимиты для {tg_id=} не найдены.')
-
-    async def to_jpg(self):
-        ...
-
-    async def to_xml(self):
-        ...
-
-    async def to_pdf(self):
-        ...
-
-    async def to_xls(self):
-        ...
