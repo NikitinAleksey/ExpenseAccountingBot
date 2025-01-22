@@ -56,16 +56,19 @@ class ExpensesController(BaseController):
     ) -> BaseArticle | None:
         """Ищет ID статьи по ее значению в словаре статей."""
         cls.log.info(
-            f"Метод extract_article_id_from_dict. Поиск id затраты для значения: {article_value}."
+            f"Метод extract_article_id_from_dict."
+            f"Поиск id затраты для значения: {article_value}."
         )
         for key in articles_dict.keys():
             if articles_dict[key] == article_value:
                 cls.log.info(
-                    f"Метод extract_article_id_from_dict. Найдено соответствие для {article_value}: {key}."
+                    f"Метод extract_article_id_from_dict. "
+                    f"Найдено соответствие для {article_value}: {key}."
                 )
                 return key
         cls.log.info(
-            f"Метод extract_article_id_from_dict. Не найдено соответствия для {article_value}."
+            f"Метод extract_article_id_from_dict."
+            f"Не найдено соответствия для {article_value}."
         )
         return None
 
@@ -75,7 +78,8 @@ class ExpensesController(BaseController):
     ) -> BaseArticle | str:
         """Добавляет новую затратную статью после валидации данных."""
         cls.log.info(
-            f"Метод add_expense. Запуск с параметрами: {tg_id=}, {article_name=}, {amount=}."
+            f"Метод add_expense."
+            f"Запуск с параметрами: {tg_id=}, {article_name=}, {amount=}."
         )
         try:
             validated_data = InsertValidator(amount=amount, article=article_name)
@@ -96,7 +100,9 @@ class ExpensesController(BaseController):
                 session=session, item=new_expense_article
             )
             cls.log.info(
-                f"Метод add_expense. Успешно добавлена новая затратная статья: {tg_id=}, {validated_data.amount=}, {cls._model=}."
+                f"Метод add_expense. "
+                f"Успешно добавлена новая затратная статья: "
+                f"{tg_id=}, {validated_data.amount=}, {cls._model=}."
             )
             return record
 
@@ -105,14 +111,17 @@ class ExpensesController(BaseController):
         cls, articles_dict: OrderedDict[BaseArticle, str], article_value: str
     ) -> BaseArticle | None:
         """Удаляет статью затрат, если она найдена в словаре."""
-        cls.log.info(f"Метод delete_expense. Запуск удаления статьи: {article_value}.")
+        cls.log.info(
+            f"Метод delete_expense. " f"Запуск удаления статьи: {article_value}."
+        )
 
         article = cls.extract_article_id_from_dict(
             articles_dict=articles_dict, article_value=article_value
         )
         if not article:
             cls.log.warning(
-                f"Метод delete_expense. Не найдено соответствующее значение для удаления: {article_value}."
+                f"Метод delete_expense. "
+                f"Не найдено соответствующее значение для удаления: {article_value}."
             )
             return None
 
@@ -132,11 +141,14 @@ class ExpensesController(BaseController):
         try:
             validated_data = ArticleValidator(article=article_name)
             cls.log.info(
-                f"Метод get_expenses. Валидация успешна для статьи: {validated_data.article}."
+                f"Метод get_expenses. "
+                f"Валидация успешна для статьи: {validated_data.article}."
             )
         except pydantic.ValidationError as exc:
             ctx_error_message = exc.errors()[0]["ctx"]["error"].args[0]
-            cls.log.error(f"Метод get_expenses. Ошибка валидации: {ctx_error_message}.")
+            cls.log.error(
+                f"Метод get_expenses. " f"Ошибка валидации: {ctx_error_message}."
+            )
             return str(ctx_error_message)
 
         cls.get_model(article_name=validated_data.article)
@@ -148,5 +160,5 @@ class ExpensesController(BaseController):
                 tg_id=tg_id,
                 model=cls._model,
             )
-            cls.log.info(f"Метод get_expenses. Получены записи: {len(records)}.")
+            cls.log.info(f"Метод get_expenses. " f"Получены записи: {len(records)}.")
             return cls.make_a_dict(records=records)

@@ -19,11 +19,11 @@ class XLSXBuilder(BaseBuilder):
                      а значения - DataFrame с данными.
         :return: LiteralString | str | bytes - путь к записанному файлу XLSX.
         """
-        self.log.debug(f"Метод write_data. Записываем данные в файл XLS.")
+        self.log.debug("Метод write_data. Записываем данные в файл XLS.")
         file_path = os.path.join(self.folder, self.filename + ".xlsx")
 
         with pd.ExcelWriter(file_path) as writer:
-            self.log.debug(f"Метод write_data. Открыли врайтер.")
+            self.log.debug("Метод write_data. Открыли врайтер.")
 
             for period, df in data.items():
                 self.log.debug(f"Метод write_data. Смотрим айтемы {period}.")

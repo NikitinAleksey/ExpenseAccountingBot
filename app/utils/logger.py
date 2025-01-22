@@ -61,8 +61,9 @@ def logged(name: str = None, log_file_name: str = None, level=logging.DEBUG):
 
     Аргументы:
         name (str, optional): Имя логгера. Если не указано, используется имя класса.
-        log_file_name (str, optional): Имя файла для записи логов. Если не указано, логи
-                                       пишутся только в консоль (по настройке AppLogger).
+        log_file_name (str, optional):
+        Имя файла для записи логов. Если не указано, логи
+        пишутся только в консоль (по настройке AppLogger).
         level (int, optional): Уровень логирования (по умолчанию DEBUG).
 
     Возвращает:

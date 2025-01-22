@@ -68,13 +68,15 @@ class LimitsController(BaseController):
                 session=session, tg_id=tg_id, model=cls._model
             )
             cls.log.info(
-                f"Метод update_limit. Текущий лимит для tg_id={tg_id}: {current_record}."
+                f"Метод update_limit. "
+                f"Текущий лимит для tg_id={tg_id}: {current_record}."
             )
             setattr(current_record, validated_data.article, validated_data.amount)
             updated_record = await cls._repository.update(
                 session=session, item=current_record
             )
             cls.log.info(
-                f"Метод update_limit. Лимит обновлен для tg_id={tg_id}: {updated_record}."
+                f"Метод update_limit. "
+                f"Лимит обновлен для tg_id={tg_id}: {updated_record}."
             )
             return updated_record

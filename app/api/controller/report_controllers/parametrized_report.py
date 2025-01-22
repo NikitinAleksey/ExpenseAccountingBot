@@ -79,16 +79,11 @@ class ParametrizedReport:
         """
         self.log.info(
             f"Метод get_parametrized_report. "
-            f"Запуск отчета c параметрами для {self.tg_id=}, {self.start=}, {self.end=} {self.group_type_method=}."
+            f"Запуск отчета c параметрами для "
+            f"{self.tg_id=}, {self.start=}, {self.end=} {self.group_type_method=}."
         )
         expenses, limits = await self._get_expenses_and_limits()
         expenses, limits = self._translate(expenses=expenses, limits=limits)
-        self.log.debug(
-            f"В ПАРАМЕТРИЗИРОВАННОМ ЗАПРОСЕ ПОЛУЧИЛИ: \n{expenses=}\n{limits=}"
-        )
-        self.log.debug(
-            f"Метод get_parametrized_report. Builder: {self.file_type_method}"
-        )
 
         builder = self.file_type_method()
         file_path = builder(
@@ -131,10 +126,10 @@ class ParametrizedReport:
             for key, val in limits.items():
                 if isinstance(val, int):
                     limits[key] = val * months_quantity
-            self.log.debug(f"Метод limits. Лимиты для {self.tg_id=}: {limits}.")
+            self.log.debug(f"Метод limits. " f"Лимиты для {self.tg_id=}: {limits}.")
             return limits
         else:
-            self.log.warning(f"Метод limits. Лимиты для {self.tg_id=} не найдены.")
+            self.log.warning(f"Метод limits. " f"Лимиты для {self.tg_id=} не найдены.")
 
     def months_between(self):
         """
@@ -154,7 +149,7 @@ class ParametrizedReport:
         :param session: Сессия для работы с базой данных.
         :return: Данные о расходах.
         """
-        self.log.debug(f"Метод article_group_type. Получаем сумму для моделей.")
+        self.log.debug("Метод article_group_type. " f"Получаем сумму для моделей.")
 
         expenses = (
             await self._article_repository.get_aggregated_articles_by_start_end_period(
@@ -171,7 +166,8 @@ class ParametrizedReport:
 
     async def period_group_type(self, session: AsyncSession):
         """
-        Получает агрегированные данные по расходам для группировки по периодам (по годам или месяцам).
+        Получает агрегированные данные по расходам для группировки
+        по периодам (по годам или месяцам).
 
         :param session: Сессия для работы с базой данных.
         :return: Данные о расходах.
@@ -206,7 +202,8 @@ class ParametrizedReport:
         :return: Словарь с данными для отчета.
         """
         cls.log.debug(
-            f"Метод _build_parametrized_report_data. Создаем словарь с затратами и лимитами."
+            "Метод _build_parametrized_report_data. "
+            "Создаем словарь с затратами и лимитами."
         )
         data = {period: {}}
         for key, value in mapping.items():
@@ -217,7 +214,8 @@ class ParametrizedReport:
                 "Лимит": limit if limit else 0,
             }
         cls.log.debug(
-            f"Метод _build_parametrized_report_data. Словарь с затратами и лимитами готов {data=}."
+            f"Метод _build_parametrized_report_data. "
+            f"Словарь с затратами и лимитами готов {data=}."
         )
 
         return data

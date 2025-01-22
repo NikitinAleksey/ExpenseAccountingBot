@@ -13,10 +13,11 @@ class XMLBuilder(BaseBuilder):
         """
         Записывает данные в файл в формате XML.
 
-        :param data: dict - данные для записи, где ключи - периоды, а значения - DataFrame.
+        :param data: dict - данные для записи,
+        где ключи - периоды, а значения - DataFrame.
         :return: LiteralString | str | bytes - путь к созданному файлу XML.
         """
-        self.log.debug(f"Метод write_data. Записываем данные в файл XML.")
+        self.log.debug("Метод write_data. Записываем данные в файл XML.")
         file_path = os.path.join(self.folder, self.filename + ".xml")
 
         xml_content = "<?xml version='1.0' encoding='utf-8'?>\n<Reports>\n"

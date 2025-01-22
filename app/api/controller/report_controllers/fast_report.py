@@ -54,12 +54,13 @@ class FastReport:
         )
 
         cls.log.debug(
-            f"Метод get_fast_report. Получены данные: расходы={expenses}, лимиты={limits}."
+            f"Метод get_fast_report. "
+            f"Получены данные: расходы={expenses}, лимиты={limits}."
         )
         report_result = cls._build_fast_report_result(
             expenses=expenses, limits=limits, mapping=mapping
         )
-        cls.log.debug(f"Метод get_fast_report. Отчет сформирован.")
+        cls.log.debug("Метод get_fast_report. " f"Отчет сформирован.")
         return report_result
 
     @classmethod
@@ -86,7 +87,8 @@ class FastReport:
         :return: Кортеж с расходами и лимитами.
         """
         cls.log.info(
-            f"Метод build_data_for_fast_report. Сбор данных для tg_id={tg_id}, start={start}."
+            f"Метод build_data_for_fast_report. "
+            f"Сбор данных для tg_id={tg_id}, start={start}."
         )
 
         expenses = {}
@@ -94,7 +96,8 @@ class FastReport:
         async with async_session as session:
             for model in models:
                 cls.log.debug(
-                    f"Метод build_data_for_fast_report. Получаем сумму для модели {model.__tablename__}."
+                    f"Метод build_data_for_fast_report. "
+                    f"Получаем сумму для модели {model.__tablename__}."
                 )
 
                 amount = await article_repository.get_summ_from_article_by_user_and_start_period(
@@ -102,7 +105,9 @@ class FastReport:
                 )
                 expenses[model.__tablename__] = round(amount) if amount else 0
                 cls.log.debug(
-                    f"Метод build_data_for_fast_report. Сумма для модели {model.__tablename__}: {expenses[model.__tablename__]}."
+                    f"Метод build_data_for_fast_report. "
+                    f"Сумма для модели {model.__tablename__}: "
+                    f"{expenses[model.__tablename__]}."
                 )
 
             limits_record = await limits_repository.read(
@@ -111,11 +116,13 @@ class FastReport:
             if limits_record:
                 limits = limits_record.__dict__
                 cls.log.debug(
-                    f"Метод build_data_for_fast_report. Лимиты для {tg_id=}: {limits}."
+                    f"Метод build_data_for_fast_report. "
+                    f"Лимиты для {tg_id=}: {limits}."
                 )
             else:
                 cls.log.warning(
-                    f"Метод build_data_for_fast_report. Лимиты для {tg_id=} не найдены."
+                    f"Метод build_data_for_fast_report. "
+                    f"Лимиты для {tg_id=} не найдены."
                 )
 
         return expenses, limits
@@ -130,7 +137,7 @@ class FastReport:
         :param mapping: Словарь с отображением статей расходов.
         :return: Отчет в виде таблицы.
         """
-        cls.log.info(f"Метод build_fast_report_result. Формирование итогового отчета.")
+        cls.log.info("Метод build_fast_report_result. Формирование итогового отчета.")
 
         headers = ["Статья расходов", "Сумма", "Лимит"]
         data = []
@@ -143,6 +150,7 @@ class FastReport:
             data.append(line)
 
         cls.log.debug(
-            f"Метод build_fast_report_result. Сформированы данные отчета, возвращаем пользователю."
+            "Метод build_fast_report_result. "
+            "Сформированы данные отчета, возвращаем пользователю."
         )
         return f"\n{tabulate(data, headers, tablefmt='double_outline')}"

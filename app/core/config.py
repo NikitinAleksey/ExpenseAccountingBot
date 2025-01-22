@@ -11,8 +11,10 @@ class Settings(pydantic_settings.BaseSettings):
     Настройки для проекта, загружаемые из .env файла.
 
     :param TG_BOT_TOKEN: SecretStr - токен для бота Telegram.
-    :param POSTGRES_USER: str - имя пользователя для подключения к базе данных PostgreSQL.
-    :param POSTGRES_PASSWORD: SecretStr - пароль для подключения к базе данных PostgreSQL.
+    :param POSTGRES_USER: str - имя пользователя для подключения к базе данных
+    PostgreSQL.
+    :param POSTGRES_PASSWORD: SecretStr - пароль для подключения к базе данных
+    PostgreSQL.
     :param POSTGRES_DB_NAME: str - имя базы данных PostgreSQL.
     :param POSTGRES_HOST: str - хост для подключения к базе данных PostgreSQL.
     :param POSTGRES_PORT: int - порт для подключения к базе данных PostgreSQL.

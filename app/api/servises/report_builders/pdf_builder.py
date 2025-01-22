@@ -25,7 +25,7 @@ class PDFBuilder(BaseBuilder):
         период, значения - DataFrame с данными).
         :return: LiteralString | str | bytes - путь к созданному файлу PDF.
         """
-        self.log.debug(f"Метод write_data. Записываем данные в файл PDF.")
+        self.log.debug("Метод write_data. Записываем данные в файл PDF.")
 
         file_path = os.path.join(self.folder, self.filename + ".pdf")
         font_path = os.path.abspath(

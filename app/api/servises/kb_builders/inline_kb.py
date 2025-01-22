@@ -9,7 +9,7 @@ class InlineKeyBoard:
 
         :param buttons: list[list] - список кнопок, каждая кнопка представлена
                         списком с текстом и callback_data.
-        :param adjust: int - количество колонок для кнопок в клавиатуре (по умолчанию 2).
+        :param adjust: int - количество колонок для кнопок в клавиатуре.
         :return: возвращает клавиатуру в виде разметки.
         """
         builder = InlineKeyboardBuilder()

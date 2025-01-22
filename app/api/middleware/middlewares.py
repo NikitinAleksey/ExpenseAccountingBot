@@ -3,7 +3,7 @@ from typing import Any, Awaitable, Callable, Dict
 from unittest.mock import _SentinelObject
 
 from aiogram.dispatcher.middlewares.base import BaseMiddleware
-from aiogram.fsm.storage.base import BaseStorage, StorageKey
+from aiogram.fsm.storage.base import BaseStorage
 from aiogram.types import Message, TelegramObject
 
 from app.utils import logged

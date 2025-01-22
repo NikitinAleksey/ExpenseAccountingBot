@@ -64,7 +64,8 @@ class ExpenseArticleRepository(BaseRepository):
         :return: список последних записей.
         """
         cls.log.info(
-            f"Метод get_last_hundred_records. Получение последних {limit} записей для tg_id={tg_id}."
+            f"Метод get_last_hundred_records. "
+            f"Получение последних {limit} записей для tg_id={tg_id}."
         )
         stmt = (
             select(model)
@@ -91,7 +92,8 @@ class ExpenseArticleRepository(BaseRepository):
         :return: сумма затрат.
         """
         cls.log.info(
-            f"Метод get_summ_from_article_by_user_and_start_period. Получение суммы затрат для tg_id={tg_id} начиная с {start}."
+            f"Метод get_summ_from_article_by_user_and_start_period. "
+            f"Получение суммы затрат для tg_id={tg_id} начиная с {start}."
         )
         stmt = select(func.sum(model.summ)).where(
             and_(model.user_id == tg_id, model.updated_at >= start)
@@ -121,7 +123,8 @@ class ExpenseArticleRepository(BaseRepository):
         :return: агрегированные данные.
         """
         cls.log.info(
-            f"Метод get_aggregated_articles_by_start_end_period. Получение суммы затрат для {tg_id=}"
+            f"Метод get_aggregated_articles_by_start_end_period. "
+            f"Получение суммы затрат для {tg_id=}"
             f" за период {start} - {end} ."
         )
         queries = []
@@ -157,7 +160,8 @@ class ExpenseArticleRepository(BaseRepository):
         :return: агрегированные данные по месяцам.
         """
         cls.log.info(
-            f"Метод get_aggregated_articles_by_start_end_period_by_months. Получение суммы затрат для tg_id={tg_id} за период {start}-{end}."
+            f"Метод get_aggregated_articles_by_start_end_period_by_months. "
+            f"Получение суммы затрат для tg_id={tg_id} за период {start}-{end}."
         )
 
         queries = []
@@ -192,7 +196,8 @@ class ExpenseArticleRepository(BaseRepository):
         :return: агрегированные данные по годам.
         """
         cls.log.info(
-            f"Метод get_aggregated_articles_by_start_end_period_by_years. Получение суммы затрат для tg_id={tg_id} за период {start} - {end}."
+            f"Метод get_aggregated_articles_by_start_end_period_by_years. "
+            f"Получение суммы затрат для {tg_id=} за период {start} - {end}."
         )
         queries = []
 

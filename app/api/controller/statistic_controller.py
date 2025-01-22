@@ -163,7 +163,8 @@ class StatisticController(BaseController):
         :param group_type_period: Период для группировки.
         """
         self.log.debug(
-            f"Метод set_group_type_period. Устанавливаем {group_type_period=} для {self.group_type=}"
+            f"Метод set_group_type_period. "
+            f"Устанавливаем {group_type_period=} для {self.group_type=}"
         )
         self.group_type_period = group_type_period
 
@@ -173,7 +174,7 @@ class StatisticController(BaseController):
 
         :return: Кортеж с отформатированными датами.
         """
-        self.log.debug(f"Метод dates_repr. Форматируем даты для ответа пользователю.")
+        self.log.debug("Метод dates_repr. Форматируем даты для ответа пользователю.")
         return self.start.strftime("%d.%m.%Y"), self.end.strftime("%d.%m.%Y")
 
     def year_builder(self) -> list:
@@ -182,7 +183,7 @@ class StatisticController(BaseController):
 
         :return: Список лет от начала до текущего года.
         """
-        self.log.debug(f"Метод year_builder. Строим список лет.")
+        self.log.debug("Метод year_builder. Строим список лет.")
         end_year = datetime.now().year
         return [str(year) for year in range(self.start.year, end_year + 1)]
 
@@ -206,20 +207,24 @@ class StatisticController(BaseController):
         :return: Сгенерированный отчет.
         """
         self.log.info(
-            f"Метод get_report. Запуск отчета для {self.tg_id=}, report_type={self.report_type}."
+            f"Метод get_report. "
+            f"Запуск отчета для "
+            f"{self.tg_id=}, report_type={self.report_type}."
         )
 
         self.log.debug(
-            f"Метод get_report. Начало отчета: {self.start=}, конец отчета: {self.end=}."
+            f"Метод get_report. "
+            f"Начало отчета: "
+            f"{self.start=}, конец отчета: {self.end=}."
         )
 
         models = self._article_model.__subclasses__()
-        self.log.debug(f"Метод get_report. Список моделей статей: {models}.")
+        self.log.debug(f"Метод get_report. " f"Список моделей статей: {models}.")
 
         async_session = await self._get_connect()
         if self.report_type == "fast":
             self.log.info(
-                f"Метод get_report. Генерация быстрого отчета для {self.tg_id=}."
+                f"Метод get_report. " f"Генерация быстрого отчета для {self.tg_id=}."
             )
             self.start = self._from_utc_to_timezone_dt(timezone=self.user.timezone)
 
@@ -236,7 +241,8 @@ class StatisticController(BaseController):
 
         elif self.report_type == "parametrized":
             self.log.info(
-                f"Метод get_report. Генерация параметризованного отчета для {self.tg_id=}."
+                f"Метод get_report. "
+                f"Генерация параметризованного отчета для {self.tg_id=}."
             )
             current = datetime.utcnow()
             self.end = self.end if self.end < current else current
@@ -268,7 +274,7 @@ class StatisticController(BaseController):
 
         else:
             self.log.error(
-                f"Метод get_report. Неверный тип отчета: {self.report_type}."
+                f"Метод get_report. " f"Неверный тип отчета: {self.report_type}."
             )
             raise ValueError("Неверный тип отчета.")
 
@@ -283,18 +289,21 @@ class StatisticController(BaseController):
         :return: Локализованная дата и время.
         """
         self.log.debug(
-            f"Метод _from_utc_to_timezone_dt. Входные параметры: {utc_datetime=}, {timezone=}."
+            f"Метод _from_utc_to_timezone_dt. "
+            f"Входные параметры: {utc_datetime=}, {timezone=}."
         )
 
         if not utc_datetime:
             utc_datetime = datetime(datetime.utcnow().year, datetime.utcnow().month, 1)
             self.log.debug(
-                f"Метод _from_utc_to_timezone_dt. Установлена дата: {utc_datetime=}."
+                f"Метод _from_utc_to_timezone_dt. "
+                f"Установлена дата: {utc_datetime=}."
             )
 
         timezone_datetime = utc_datetime - timedelta(hours=timezone)
 
         self.log.debug(
-            f"Метод _from_utc_to_timezone_dt. После учета часового пояса: {timezone_datetime=}."
+            f"Метод _from_utc_to_timezone_dt. "
+            f"После учета часового пояса: {timezone_datetime=}."
         )
         return timezone_datetime

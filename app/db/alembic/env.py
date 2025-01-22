@@ -16,7 +16,14 @@ postgres_host = os.getenv("POSTGRES_HOST")
 postgres_port = os.getenv("POSTGRES_PORT")
 postgres_db_name = os.getenv("POSTGRES_DB_NAME")
 
-sqlalchemy_url = f"postgresql://{postgres_user}:{postgres_password}@{postgres_host}:{postgres_port}/{postgres_db_name}"
+sqlalchemy_url = (
+    f"postgresql://"
+    f"{postgres_user}:"
+    f"{postgres_password}@"
+    f"{postgres_host}:"
+    f"{postgres_port}/"
+    f"{postgres_db_name}"
+)
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

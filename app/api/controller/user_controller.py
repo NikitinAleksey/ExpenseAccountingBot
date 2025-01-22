@@ -1,5 +1,4 @@
 from app.api.controller import BaseController
-from app.db.connector import PostgresConnector
 from app.db.models.user import User
 from app.db.repositories.user import UserRepository
 from app.utils import logged

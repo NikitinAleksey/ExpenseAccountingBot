@@ -39,7 +39,8 @@ class ArticleValidator(BaseModel):
         allowed_expense_articles = ExpenseArticleMapping.data.keys()
         if value not in allowed_expense_articles:
             raise ValueError(
-                "Статья расходов должна быть одной из имеющихся в списке ниже. Выберите статью:"
+                "Статья расходов должна быть одной из имеющихся "
+                "в списке ниже. Выберите статью:"
             )
         return value
 
@@ -86,7 +87,8 @@ class LimitsValidator(InsertValidator):
         )
         if not article_name:
             raise ValueError(
-                "Статья лимитов должна быть одной из имеющихся в списке ниже. Выберите статью:"
+                "Статья лимитов должна быть одной из имеющихся в списке ниже. "
+                "Выберите статью:"
             )
         return article_name
 
@@ -143,7 +145,8 @@ class DayValidator(BaseModel):
         :param value: Any - день, который нужно проверить.
         :param values: dict - словарь с данными года и месяца.
         :return: int - возвращает день как целое число.
-        :raises ValueError: если день не является числом или выходит за пределы допустимого диапазона.
+        :raises ValueError: если день не является числом или выходит
+        за пределы допустимого диапазона.
         """
         data = values.data
         year = data["year"]

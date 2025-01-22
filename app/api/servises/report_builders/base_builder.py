@@ -15,7 +15,8 @@ class BaseBuilder:
         """
         Инициализация класса для создания отчета.
 
-        :param expenses: list[tuple] - список расходов в виде кортежей (период, сумма, категория).
+        :param expenses: list[tuple] - список расходов в виде кортежей
+        (период, сумма, категория).
         :param limits: dict - словарь лимитов по категориям.
         :param tg_id: int - ID пользователя в Telegram.
         """
@@ -32,7 +33,7 @@ class BaseBuilder:
 
         :return: str - путь к файлу с отчетом.
         """
-        self.log.debug(f"Метод generate_report. Подготовка данных.")
+        self.log.debug("Метод generate_report. Подготовка данных.")
         periods = sorted(set([expense[0] for expense in self.expenses]))
         tables_by_period = {}
 
@@ -58,7 +59,7 @@ class BaseBuilder:
             )
 
             tables_by_period[period] = df
-        self.log.debug(f"Метод generate_report. Данные подготовлены.")
+        self.log.debug("Метод generate_report. Данные подготовлены.")
 
         return self.write_data(data=tables_by_period)
 
