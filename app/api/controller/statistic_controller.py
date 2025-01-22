@@ -19,6 +19,11 @@ from app.utils import logged
 
 @logged()
 class StatisticController(BaseController):
+    """
+    Контроллер статистики для формирования отчетов по заданным периодам и параметрам.
+    Обрабатывает запросы на получение отчетов с учетом часового пояса пользователя.
+    """
+
     _limits_repository = LimitsRepository
     _article_repository = ExpenseArticleRepository
     _user_repository = UserRepository
@@ -37,6 +42,15 @@ class StatisticController(BaseController):
         user: User,
         template: dict = None,
     ):
+        """
+        Инициализация контроллера статистики.
+
+        :param tg_id: ID пользователя в Telegram.
+        :param mapping: Словарь с данными для отчета.
+        :param report_type: Тип отчета (быстрый или параметризованный).
+        :param user: Пользователь, для которого генерируется отчет.
+        :param template: Шаблон отчета.
+        """
         self.tg_id = tg_id
         self.start = datetime(year=2024, month=1, day=1)
         self.end = datetime(year=datetime.utcnow().year, month=12, day=31)
@@ -50,6 +64,13 @@ class StatisticController(BaseController):
         self.file_type = None
 
     def set_year(self, year: str, edge: Literal["start", "end"]):
+        """
+        Устанавливает год для начала или конца периода отчета.
+
+        :param year: Год, который нужно установить.
+        :param edge: Граница периода (start или end).
+        :return: Сообщение об ошибке, если год неверный, или None.
+        """
         self.log.debug(f"Метод set_year. Устанавливаем год {year=} для {edge=}")
         try:
             validated_year = self._year_validator(year=year)
@@ -66,6 +87,13 @@ class StatisticController(BaseController):
         self.log.debug(f"Метод set_year. Год {year=} для {edge=} установлен.")
 
     def set_month(self, month: str, edge: Literal["start", "end"]):
+        """
+        Устанавливает месяц для начала или конца периода отчета.
+
+        :param month: Месяц, который нужно установить.
+        :param edge: Граница периода (start или end).
+        :return: Сообщение об ошибке, если месяц неверный, или None.
+        """
         self.log.debug(f"Метод set_month. Устанавливаем месяц {month=} для {edge=}.")
         try:
             validated_month = self._month_validator(month=month)
@@ -83,6 +111,15 @@ class StatisticController(BaseController):
         self.log.debug(f"Метод set_year. Месяц {month=} для {edge=} установлен.")
 
     def set_day(self, day: str, month: int, year: int, edge: Literal["start", "end"]):
+        """
+        Устанавливает день для начала или конца периода отчета.
+
+        :param day: День, который нужно установить.
+        :param month: Месяц, для которого устанавливается день.
+        :param year: Год, для которого устанавливается день.
+        :param edge: Граница периода (start или end).
+        :return: Сообщение об ошибке, если день неверный, или None.
+        """
         self.log.debug(
             f"Метод set_day. Устанавливаем день {day=} для {edge=}, {year=}, {month=}."
         )
@@ -103,36 +140,71 @@ class StatisticController(BaseController):
         )
 
     def set_group_type(self, group_type: str):
-        self.log.debug(f"Метод set_group_type. Устанавливаем {group_type=}")
+        """
+        Устанавливает тип группировки для отчета.
 
+        :param group_type: Тип группировки.
+        """
+        self.log.debug(f"Метод set_group_type. Устанавливаем {group_type=}")
         self.group_type = group_type
 
     def set_file_type(self, file_type: str):
+        """
+        Устанавливает тип файла для отчета.
+
+        :param file_type: Тип файла.
+        """
         self.file_type = file_type
 
     def set_group_type_period(self, group_type_period: str):
+        """
+        Устанавливает период для группировки отчета.
+
+        :param group_type_period: Период для группировки.
+        """
         self.log.debug(
             f"Метод set_group_type_period. Устанавливаем {group_type_period=} для {self.group_type=}"
         )
         self.group_type_period = group_type_period
 
     def dates_repr(self):
+        """
+        Форматирует даты начала и конца для ответа пользователю.
+
+        :return: Кортеж с отформатированными датами.
+        """
         self.log.debug(f"Метод dates_repr. Форматируем даты для ответа пользователю.")
         return self.start.strftime("%d.%m.%Y"), self.end.strftime("%d.%m.%Y")
 
     def year_builder(self) -> list:
+        """
+        Строит список лет для отчета.
+
+        :return: Список лет от начала до текущего года.
+        """
         self.log.debug(f"Метод year_builder. Строим список лет.")
         end_year = datetime.now().year
         return [str(year) for year in range(self.start.year, end_year + 1)]
 
     @staticmethod
     def day_builder(date: datetime):
+        """
+        Строит список дней для заданной даты.
+
+        :param date: Дата, для которой строится список дней.
+        :return: Список дней в месяце.
+        """
         year = date.year
         month = date.month
         days_qnt = calendar.monthrange(year, month)[1]
         return [str(day) for day in range(1, days_qnt + 1)]
 
     async def get_report(self):
+        """
+        Генерирует отчет в зависимости от типа отчета (быстрый или параметризованный).
+
+        :return: Сгенерированный отчет.
+        """
         self.log.info(
             f"Метод get_report. Запуск отчета для {self.tg_id=}, report_type={self.report_type}."
         )
@@ -204,13 +276,11 @@ class StatisticController(BaseController):
         self, timezone: int = 0, utc_datetime: datetime = None
     ) -> datetime:
         """
-        Метод получает время и дату (или None, тогда определяет текущую дату по utc) и вычитает из нее часовой пояс.
-        Это нужно, чтобы корректно создавать временные промежутки для отчетов. Так как время в бд хранится в UTC.
+        Преобразует время из UTC в локальное время с учетом часового пояса.
 
-
-        :param timezone: Часовой пояс пользователя из бд.
-        :param utc_datetime: Дата и время границы периода, или None (тогда возьмется начало текущего месяца).
-        :return: Нужный период с учетом timezone.
+        :param timezone: Часовой пояс пользователя.
+        :param utc_datetime: Дата и время в UTC, либо None для текущего времени.
+        :return: Локализованная дата и время.
         """
         self.log.debug(
             f"Метод _from_utc_to_timezone_dt. Входные параметры: {utc_datetime=}, {timezone=}."

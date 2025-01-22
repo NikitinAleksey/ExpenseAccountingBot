@@ -20,6 +20,14 @@ commands_router = Router()
 async def start_handler(
     event: Union[Message, CallbackQuery], state: FSMContext, texts: dict
 ):
+    """
+    Обработчик команды /start.
+
+    :param event: Сообщение или CallbackQuery.
+    :param state: Контекст состояния FSM.
+    :param texts: Словарь с текстами для ответа.
+    :return: Ответное сообщение.
+    """
     message = event.message if isinstance(event, CallbackQuery) else event
     await state.clear()
     return await message.answer(
@@ -35,6 +43,14 @@ async def start_handler(
 async def statistic_handler(
     event: Union[Message, CallbackQuery], state: FSMContext, texts: dict
 ):
+    """
+    Обработчик команды /statistic.
+
+    :param event: Сообщение или CallbackQuery.
+    :param state: Контекст состояния FSM.
+    :param texts: Словарь с текстами для ответа.
+    :return: Ответное сообщение.
+    """
     await state.clear()
     user = await UserController.get_user(tg_id=event.from_user.id)
     message = event.message if isinstance(event, CallbackQuery) else event
@@ -63,6 +79,14 @@ async def statistic_handler(
 async def register_handler(
     event: Union[Message, CallbackQuery], state: FSMContext, texts: dict
 ):
+    """
+    Обработчик команды /register.
+
+    :param event: Сообщение или CallbackQuery.
+    :param state: Контекст состояния FSM.
+    :param texts: Словарь с текстами для ответа.
+    :return: Ответное сообщение.
+    """
     message = event.message if isinstance(event, CallbackQuery) else event
     register_message = texts["commands"]["register"]
     await state.set_state(TimezoneStates.waiting_for_add_timezone)
@@ -76,5 +100,12 @@ async def register_handler(
 
 @commands_router.message(Command("help"))
 async def help_handler(message: Message, texts: dict):
+    """
+    Обработчик команды /help.
+
+    :param message: Сообщение от пользователя.
+    :param texts: Словарь с текстами для ответа.
+    :return: Ответное сообщение.
+    """
     help_message = texts["commands"]["help"]
     return await message.answer(text=help_message)

@@ -16,6 +16,14 @@ delete_router = Router()
 
 @delete_router.callback_query(F.data == "delete")
 async def delete_handler(callback: CallbackQuery, state: FSMContext, texts: dict):
+    """
+    Обрабатывает запрос на удаление и выводит сообщение для выбора статьи расходов.
+
+    :param callback: Callback-запрос от пользователя.
+    :param state: Состояние FSM.
+    :param texts: Словарь с текстами для ответов.
+    :return: Ответ с текстом и кнопками для выбора статьи расходов.
+    """
     delete_message = texts["delete_texts"]["item"]
     await state.set_state(DeleteStates.waiting_for_chose_article)
     return await callback.message.answer(
@@ -30,6 +38,14 @@ async def delete_handler(callback: CallbackQuery, state: FSMContext, texts: dict
 async def delete_waiting_for_chose_item(
     message: Message, state: FSMContext, texts: dict
 ):
+    """
+    Ожидает выбора статьи для удаления и выводит список записей.
+
+    :param message: Сообщение пользователя с выбранной статьей.
+    :param state: Состояние FSM.
+    :param texts: Словарь с текстами для ответов.
+    :return: Ответ с найденными записями или сообщением об ошибке.
+    """
     records = await ExpensesController.get_expenses(
         tg_id=message.from_user.id, article_name=message.text
     )
@@ -62,6 +78,14 @@ async def delete_waiting_for_chose_item(
 
 @delete_router.message(StateFilter(DeleteStates.waiting_for_delete_article))
 async def delete_waiting_for_item(message: Message, state: FSMContext, texts: dict):
+    """
+    Обрабатывает подтверждение удаления статьи расходов.
+
+    :param message: Сообщение с подтверждением удаления.
+    :param state: Состояние FSM.
+    :param texts: Словарь с текстами для ответов.
+    :return: Ответ с результатом удаления и кнопками для повторного удаления.
+    """
     data = await state.get_data()
     delete_record = await ExpensesController.delete_expense(
         articles_dict=data.get("articles_to_delete"), article_value=message.text
@@ -84,6 +108,14 @@ async def delete_waiting_for_item(message: Message, state: FSMContext, texts: di
 async def delete_waiting_for_repeat(
     callback: CallbackQuery, state: FSMContext, texts: dict
 ):
+    """
+    Ожидает повторного подтверждения на удаление или возвращает к начальной команде.
+
+    :param callback: Callback-запрос от пользователя.
+    :param state: Состояние FSM.
+    :param texts: Словарь с текстами для ответов.
+    :return: Ответ с дальнейшими действиями в зависимости от выбора.
+    """
     if callback.message.text == "Да":
         await state.set_state(DeleteStates.waiting_for_chose_article)
         return await delete_handler(callback=callback, state=state, texts=texts)

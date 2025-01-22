@@ -26,6 +26,19 @@ class FastReport:
         limits_model: Type[MonthlyLimits],
         start: datetime = None,
     ):
+        """
+        Генерация быстрого отчета для пользователя.
+
+        :param tg_id: ID пользователя в Telegram.
+        :param mapping: Словарь с отображением статей расходов.
+        :param models: Список моделей статей расходов.
+        :param async_session: Функция для получения асинхронной сессии.
+        :param article_repository: Репозиторий для статей расходов.
+        :param limits_repository: Репозиторий для лимитов.
+        :param limits_model: Модель лимитов.
+        :param start: Дата начала отчетного периода.
+        :return: Строка с отчетом в формате таблицы.
+        """
         cls.log.info(
             f"Метод get_fast_report. Запуск быстрого отчета для {tg_id=}, {start=}."
         )
@@ -60,6 +73,18 @@ class FastReport:
         limits_model: Type[MonthlyLimits],
         start: datetime,
     ):
+        """
+        Сбор данных для быстрого отчета.
+
+        :param tg_id: ID пользователя в Telegram.
+        :param models: Список моделей статей расходов.
+        :param async_session: Функция для получения асинхронной сессии.
+        :param article_repository: Репозиторий для статей расходов.
+        :param limits_repository: Репозиторий для лимитов.
+        :param limits_model: Модель лимитов.
+        :param start: Дата начала отчетного периода.
+        :return: Кортеж с расходами и лимитами.
+        """
         cls.log.info(
             f"Метод build_data_for_fast_report. Сбор данных для tg_id={tg_id}, start={start}."
         )
@@ -97,6 +122,14 @@ class FastReport:
 
     @classmethod
     def _build_fast_report_result(cls, expenses: dict, limits: dict, mapping: dict):
+        """
+        Формирование итогового отчета.
+
+        :param expenses: Расходы для каждой статьи.
+        :param limits: Лимиты для каждой статьи.
+        :param mapping: Словарь с отображением статей расходов.
+        :return: Отчет в виде таблицы.
+        """
         cls.log.info(f"Метод build_fast_report_result. Формирование итогового отчета.")
 
         headers = ["Статья расходов", "Сумма", "Лимит"]

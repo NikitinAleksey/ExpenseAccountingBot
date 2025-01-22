@@ -1,5 +1,5 @@
+from typing import LiteralString
 import os
-from io import BytesIO
 
 import pandas as pd
 
@@ -11,7 +11,14 @@ __all__ = ["XLSXBuilder"]
 
 @logged()
 class XLSXBuilder(BaseBuilder):
-    def write_data(self, data: dict):
+    def write_data(self, data: dict) -> LiteralString | str | bytes:
+        """
+        Записывает данные в файл XLSX.
+
+        :param data: dict - словарь с данными для записи, где ключи - периоды,
+                     а значения - DataFrame с данными.
+        :return: LiteralString | str | bytes - путь к записанному файлу XLSX.
+        """
         self.log.debug(f"Метод write_data. Записываем данные в файл XLS.")
         file_path = os.path.join(self.folder, self.filename + ".xlsx")
 

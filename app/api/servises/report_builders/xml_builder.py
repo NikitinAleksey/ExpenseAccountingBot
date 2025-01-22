@@ -1,4 +1,5 @@
 import os
+from typing import LiteralString
 
 from app.api.servises.report_builders import BaseBuilder
 from app.utils import logged
@@ -8,7 +9,13 @@ __all__ = ["XMLBuilder"]
 
 @logged()
 class XMLBuilder(BaseBuilder):
-    def write_data(self, data: dict):
+    def write_data(self, data: dict) -> LiteralString | str | bytes:
+        """
+        Записывает данные в файл в формате XML.
+
+        :param data: dict - данные для записи, где ключи - периоды, а значения - DataFrame.
+        :return: LiteralString | str | bytes - путь к созданному файлу XML.
+        """
         self.log.debug(f"Метод write_data. Записываем данные в файл XML.")
         file_path = os.path.join(self.folder, self.filename + ".xml")
 

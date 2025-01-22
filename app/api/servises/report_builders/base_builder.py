@@ -1,5 +1,6 @@
 import os
 from abc import abstractmethod
+from typing import LiteralString
 
 import pandas as pd
 
@@ -11,6 +12,13 @@ __all__ = ["BaseBuilder"]
 @logged()
 class BaseBuilder:
     def __init__(self, expenses: list[tuple], limits: dict, tg_id: int):
+        """
+        Инициализация класса для создания отчета.
+
+        :param expenses: list[tuple] - список расходов в виде кортежей (период, сумма, категория).
+        :param limits: dict - словарь лимитов по категориям.
+        :param tg_id: int - ID пользователя в Telegram.
+        """
         self.expenses = expenses
         self.limits = limits
         self.data_frame = None
@@ -19,6 +27,11 @@ class BaseBuilder:
         self.filename = f"Отчет для пользователя с id {tg_id}"
 
     def generate_report(self):
+        """
+        Генерирует отчет по расходам для пользователя.
+
+        :return: str - путь к файлу с отчетом.
+        """
         self.log.debug(f"Метод generate_report. Подготовка данных.")
         periods = sorted(set([expense[0] for expense in self.expenses]))
         tables_by_period = {}
@@ -50,5 +63,11 @@ class BaseBuilder:
         return self.write_data(data=tables_by_period)
 
     @abstractmethod
-    def write_data(self, data: dict):
+    def write_data(self, data: dict) -> LiteralString | str | bytes:
+        """
+        Абстрактный метод для записи данных отчета.
+
+        :param data: dict - словарь с данными по периодам и расходам.
+        :return: None
+        """
         pass

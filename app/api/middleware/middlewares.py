@@ -1,5 +1,4 @@
 import asyncio
-import functools
 from typing import Any, Awaitable, Callable, Dict
 from unittest.mock import _SentinelObject
 
@@ -13,6 +12,12 @@ __all__ = ["StorageMiddleware", "DeletePreviousMSGMiddleware"]
 
 
 class StorageMiddleware(BaseMiddleware):
+    """
+    Миддлвар для работы с хранилищем.
+
+    :param storage: Хранилище для данных.
+    """
+
     def __init__(self, storage: BaseStorage):
         super().__init__()
         self.storage = storage
@@ -23,6 +28,14 @@ class StorageMiddleware(BaseMiddleware):
         event: TelegramObject,
         data: Dict[str, Any],
     ) -> Any:
+        """
+        Обработка события и передача данных в хранилище.
+
+        :param handler: Обработчик события.
+        :param event: Событие Telegram.
+        :param data: Данные, передаваемые в обработчик.
+        :return: Результат выполнения обработчика.
+        """
         data["texts"] = self.storage
         result = await handler(event, data)
         return result
@@ -30,6 +43,12 @@ class StorageMiddleware(BaseMiddleware):
 
 @logged()
 class DeletePreviousMSGMiddleware(BaseMiddleware):
+    """
+    Миддлвар для удаления предыдущих сообщений в чате.
+
+    :param storage: Хранилище для хранения сообщений.
+    """
+
     def __init__(self, storage: BaseStorage):
         super().__init__()
         self.storage = storage
@@ -40,34 +59,34 @@ class DeletePreviousMSGMiddleware(BaseMiddleware):
         event: TelegramObject,
         data: Dict[str, Any],
     ) -> Any:
+        """
+        Удаление предыдущих сообщений и передача события.
+
+        :param handler: Обработчик события.
+        :param event: Событие Telegram.
+        :param data: Данные, передаваемые в обработчик.
+        :return: Результат выполнения обработчика.
+        """
         chat_id = (
             event.message.chat.id
             if event.message
             else event.callback_query.message.chat.id
         )
-        self.log.info(f"Чат: {chat_id}. Получили чат id.")
         if self.storage.get(chat_id):
             while not self.storage[chat_id].empty():
                 event_to_be_cleaned = await self.storage[chat_id].get()
                 try:
                     await event_to_be_cleaned.delete()
                 except AttributeError as exc:
-                    # TODO логгер, конечно
-                    print(exc)
-            self.log.info(f"Чат: {chat_id}. Удалили старые сообщения.")
+                    self.log.warning(f"Чат: {chat_id}. Ошибка: {exc}.")
         else:
             self.storage[chat_id] = asyncio.Queue()
-            self.log.info(
-                f"Чат: {chat_id}. Чат пуст, создали очередь для сообщений, которые будут удалены."
-            )
+
         if isinstance(event.message, Message):
             await self.storage[chat_id].put(event.message)
-            self.log.info(
-                f"Чат: {chat_id}. Входящее событие - сообщение. Добавили в очередь."
-            )
+
         result = await handler(event, data)
 
         if not isinstance(result, _SentinelObject):
             await self.storage[chat_id].put(result)
-        self.log.info(f"Чат: {chat_id}. Ответили пользователю.")
         return result

@@ -18,8 +18,6 @@ postgres_db_name = os.getenv("POSTGRES_DB_NAME")
 
 sqlalchemy_url = f"postgresql://{postgres_user}:{postgres_password}@{postgres_host}:{postgres_port}/{postgres_db_name}"
 
-# TODO после первого запуска и заполнения таблиц сгенерировать файл миграций
-
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config

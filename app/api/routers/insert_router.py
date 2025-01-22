@@ -15,7 +15,17 @@ insert_router = Router()
 
 
 @insert_router.callback_query(F.data == "insert")
-async def insert_handler(callback: CallbackQuery, state: FSMContext, texts: dict):
+async def insert_handler(
+    callback: CallbackQuery, state: FSMContext, texts: dict
+):
+    """
+    Обработка запроса на добавление расходной статьи.
+
+    :param callback: CallbackQuery, содержащий данные запроса.
+    :param state: FSMContext, контекст состояния.
+    :param texts: Словарь с текстами для сообщений.
+    :return: Отправка сообщения с запросом статьи расхода.
+    """
     insert_message = texts["insert_texts"]["item"]
     await state.set_state(InsertStates.waiting_for_insert_item)
     return await callback.message.answer(
@@ -27,7 +37,17 @@ async def insert_handler(callback: CallbackQuery, state: FSMContext, texts: dict
 
 
 @insert_router.message(StateFilter(InsertStates.waiting_for_insert_item))
-async def insert_waiting_for_item(message: Message, state: FSMContext, texts: dict):
+async def insert_waiting_for_item(
+    message: Message, state: FSMContext, texts: dict
+):
+    """
+    Ожидание ввода статьи расхода от пользователя.
+
+    :param message: Сообщение пользователя с введенным текстом.
+    :param state: FSMContext, контекст состояния.
+    :param texts: Словарь с текстами для сообщений.
+    :return: Отправка сообщения с запросом суммы расхода.
+    """
     formatted_msg = texts["insert_texts"]["sum"].format(item=message.text)
     await state.set_data({"expense_article": message.text})
     await state.set_state(InsertStates.waiting_for_insert_sum)
@@ -40,7 +60,17 @@ async def insert_waiting_for_item(message: Message, state: FSMContext, texts: di
 
 
 @insert_router.message(StateFilter(InsertStates.waiting_for_insert_sum))
-async def insert_waiting_for_sum(message: Message, state: FSMContext, texts: dict):
+async def insert_waiting_for_sum(
+    message: Message, state: FSMContext, texts: dict
+):
+    """
+    Ожидание ввода суммы расхода от пользователя.
+
+    :param message: Сообщение пользователя с введенной суммой.
+    :param state: FSMContext, контекст состояния.
+    :param texts: Словарь с текстами для сообщений.
+    :return: Подтверждение добавления расхода и запрос на повторение.
+    """
     state_data = await state.get_data()
     expense_article = state_data.get("expense_article")
     record = await ExpensesController.add_expense(
@@ -69,6 +99,14 @@ async def insert_waiting_for_sum(message: Message, state: FSMContext, texts: dic
 async def insert_waiting_for_repeat(
     callback: CallbackQuery, state: FSMContext, texts: dict
 ):
+    """
+    Обработка запроса на повторное добавление расхода.
+
+    :param callback: CallbackQuery, содержащий данные запроса.
+    :param state: FSMContext, контекст состояния.
+    :param texts: Словарь с текстами для сообщений.
+    :return: Перевод в соответствующее состояние или завершение.
+    """
     if callback.message.text == "Да":
         await state.set_state(InsertStates.waiting_for_insert_item)
         return await insert_handler(callback=callback, state=state, texts=texts)

@@ -1,4 +1,5 @@
 import os
+from typing import LiteralString
 
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
@@ -16,7 +17,14 @@ __all__ = ["PDFBuilder"]
 
 @logged()
 class PDFBuilder(BaseBuilder):
-    def write_data(self, data: dict):
+    def write_data(self, data: dict) -> LiteralString | str | bytes:
+        """
+        Записывает данные в файл PDF и сохраняет их на диск.
+
+        :param data: dict - данные, которые будут записаны в таблицу PDF (ключи -
+        период, значения - DataFrame с данными).
+        :return: LiteralString | str | bytes - путь к созданному файлу PDF.
+        """
         self.log.debug(f"Метод write_data. Записываем данные в файл PDF.")
 
         file_path = os.path.join(self.folder, self.filename + ".pdf")
@@ -41,7 +49,7 @@ class PDFBuilder(BaseBuilder):
             story.append(Paragraph(f"{period}", heading_style))
             story.append(
                 Spacer(1, 12)
-            )  # 1 - это количество колонок, 12 - размер отступа
+            )
 
             table_data = [df.columns.to_list()] + df.values.tolist()
             total_width = doc.pagesize[0] - 80

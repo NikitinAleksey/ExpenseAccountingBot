@@ -28,6 +28,13 @@ class ArticleValidator(BaseModel):
 
     @field_validator("article")
     def validate_article(cls, value):
+        """
+        Проверяет, что статья расходов существует в списке доступных статей.
+
+        :param value: str - статья расходов, которую нужно проверить.
+        :return: str - возвращает статью расходов, если она допустима.
+        :raises ValueError: если статья расходов не найдена в списке.
+        """
         value = value.lower()
         allowed_expense_articles = ExpenseArticleMapping.data.keys()
         if value not in allowed_expense_articles:
@@ -42,6 +49,13 @@ class InsertValidator(ArticleValidator):
 
     @field_validator("amount")
     def validate_amount(cls, value):
+        """
+        Проверяет, что значение суммы является положительным числом.
+
+        :param value: str - сумма, которую нужно проверить.
+        :return: float - возвращает сумму как число с плавающей точкой.
+        :raises ValueError: если сумма не является числом или меньше либо равна нулю.
+        """
         try:
             value = float(value)
         except ValueError:
@@ -59,6 +73,13 @@ class DeleteValidator(ArticleValidator):
 class LimitsValidator(InsertValidator):
     @field_validator("article")
     def validate_article(cls, value):
+        """
+        Проверяет, что статья лимитов существует в списке доступных лимитов.
+
+        :param value: str - статья лимитов, которую нужно проверить.
+        :return: str - возвращает статью лимитов, если она допустима.
+        :raises ValueError: если статья лимитов не найдена в списке.
+        """
         value = value.lower()
         article_name = ExpenseLimitsArticleMapping.get_field_name_from_article_name(
             article_name=value
@@ -75,6 +96,13 @@ class YearValidator(BaseModel):
 
     @field_validator("year")
     def validate_year(cls, value):
+        """
+        Проверяет, что год является числом, больше 2023.
+
+        :param value: Any - значение года, которое нужно проверить.
+        :return: int - возвращает год как целое число.
+        :raises ValueError: если год не является числом или меньше 2024.
+        """
         try:
             value = int(value)
         except ValueError:
@@ -89,6 +117,13 @@ class MonthValidator(BaseModel):
 
     @field_validator("month")
     def validate_month(cls, value):
+        """
+        Проверяет, что месяц является допустимым значением.
+
+        :param value: Any - месяц, который нужно проверить.
+        :return: int - возвращает номер месяца.
+        :raises ValueError: если месяц не найден в списке.
+        """
         if value not in texts["reply_buttons"]["months"]:
             raise ValueError("Месяц должен быть месяцем, ало. Выберите месяц:")
         month_number = months.get(value.lower())
@@ -102,6 +137,14 @@ class DayValidator(BaseModel):
 
     @field_validator("day")
     def validate_day(cls, value, values):
+        """
+        Проверяет, что день является допустимым для указанного месяца и года.
+
+        :param value: Any - день, который нужно проверить.
+        :param values: dict - словарь с данными года и месяца.
+        :return: int - возвращает день как целое число.
+        :raises ValueError: если день не является числом или выходит за пределы допустимого диапазона.
+        """
         data = values.data
         year = data["year"]
         month = data["month"]

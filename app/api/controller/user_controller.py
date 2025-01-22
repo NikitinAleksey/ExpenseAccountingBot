@@ -14,8 +14,17 @@ class UserController(BaseController):
 
     @classmethod
     async def register_user(cls, tg_id: int, name: str, timezone: int):
+        """
+        Регистрация нового пользователя в системе.
+
+        :param tg_id: ID пользователя в Telegram.
+        :param name: Имя пользователя.
+        :param timezone: Часовой пояс пользователя.
+        :return: Зарегистрированный пользователь.
+        """
         cls.log.info(
-            f"Метод register_user. Попытка регистрации пользователя tg_id={tg_id}, name={name}, timezone={timezone}."
+            f"Метод register_user. Попытка регистрации пользователя tg_id={tg_id}, "
+            f"name={name}, timezone={timezone}."
         )
         async_session = await cls._get_connect()
         cls.log.debug("Метод register_user. Соединение получено.")
@@ -43,6 +52,14 @@ class UserController(BaseController):
 
     @classmethod
     async def update_user(cls, tg_id: int, name: str, timezone: int):
+        """
+        Обновление данных пользователя.
+
+        :param tg_id: ID пользователя.
+        :param name: Новое имя пользователя.
+        :param timezone: Новый часовой пояс пользователя.
+        :return: Обновленные данные пользователя.
+        """
         cls.log.info(f"Метод update_user. Обновление данных пользователя {tg_id=}.")
         async_session = await cls._get_connect()
         async with async_session as session:
@@ -59,6 +76,12 @@ class UserController(BaseController):
 
     @classmethod
     async def get_user(cls, tg_id: int):
+        """
+        Поиск пользователя по его tg_id.
+
+        :param tg_id: ID пользователя в Telegram.
+        :return: Найденный пользователь или None, если пользователь не найден.
+        """
         cls.log.info(f"Метод get_user. Поиск пользователя с {tg_id=}.")
         async_session = await cls._get_connect()
         async with async_session as session:

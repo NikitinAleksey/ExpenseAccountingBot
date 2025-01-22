@@ -25,6 +25,12 @@ middlewares = [StorageMiddleware, DeletePreviousMSGMiddleware]
 
 
 async def start_bot(token: str):
+    """
+    Запускает бота с указанными параметрами.
+
+    :param token: str - токен для подключения бота.
+    :return: запускает процесс polling для бота.
+    """
     bot, dp = await create_bot(
         token=token, routers=routers_list, middlewares=middlewares, texts=texts
     )
@@ -32,6 +38,11 @@ async def start_bot(token: str):
 
 
 async def create_app():
+    """
+    Создает и запускает приложение.
+
+    :return: запускает асинхронную задачу для старта бота.
+    """
     bot_task = asyncio.create_task(start_bot(settings.TG_BOT_TOKEN.get_secret_value()))
     await bot_task
 

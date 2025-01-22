@@ -1,13 +1,7 @@
-from collections import OrderedDict
-from datetime import datetime, timedelta
-
 import pydantic
 
 from app.api.controller import BaseController
-from app.api.servises.mapping.mapping import ExpenseLimitsArticleMapping
 from app.api.servises.validators.validators import LimitsValidator
-from app.db import Base
-from app.db.connector import PostgresConnector
 from app.db.models import MonthlyLimits
 from app.db.repositories.monthly_limits import LimitsRepository
 from app.utils import logged
@@ -17,11 +11,18 @@ __all__ = ["LimitsController"]
 
 @logged()
 class LimitsController(BaseController):
+    """Контроллер для управления месячными лимитами пользователей."""
     _repository = LimitsRepository
     _model = MonthlyLimits
 
     @classmethod
-    async def init_limits(cls, tg_id: int):
+    async def init_limits(cls, tg_id: int) -> MonthlyLimits:
+        """
+        Инициализирует лимиты для указанного пользователя.
+
+        :param tg_id: ID пользователя в Telegram.
+        :return: Созданная запись с лимитами.
+        """
         cls.log.info(f"Метод init_limits. Инициализация лимитов для {tg_id=}.")
         async_session = await cls._get_connect()
         async with async_session as session:
@@ -35,9 +36,20 @@ class LimitsController(BaseController):
             return record
 
     @classmethod
-    async def update_limit(cls, tg_id: int, article_name: str, article_value: str):
+    async def update_limit(
+        cls, tg_id: int, article_name: str, article_value: str
+    ) -> MonthlyLimits | str:
+        """
+        Обновляет лимит для указанного пользователя по статье расходов.
+
+        :param tg_id: ID пользователя в Telegram.
+        :param article_name: Название статьи расходов.
+        :param article_value: Новое значение лимита.
+        :return: Обновленная запись с лимитом или сообщение об ошибке.
+        """
         cls.log.info(
-            f"Метод update_limit. Обновление лимита для tg_id={tg_id}, article_name={article_name}, article_value={article_value}."
+            f"Метод update_limit. Обновление лимита для tg_id={tg_id}, "
+            f"article_name={article_name}, article_value={article_value}."
         )
         try:
             validated_data = LimitsValidator(amount=article_value, article=article_name)

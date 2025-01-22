@@ -4,19 +4,59 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50ab5273-8ace-44c9-80bc-7f1c6833176c" name="Changes" comment="First step for this project">
+    <list default="true" id="50ab5273-8ace-44c9-80bc-7f1c6833176c" name="Changes" comment="isort is done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/bot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/controller/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/controller/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/controller/base_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/controller/base_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/controller/expenses_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/controller/expenses_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/controller/limits_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/controller/limits_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/controller/report_controllers/fast_report.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/controller/report_controllers/fast_report.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/controller/report_controllers/parametrized_report.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/controller/report_controllers/parametrized_report.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/controller/statistic_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/controller/statistic_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/controller/user_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/controller/user_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/dependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/.flake8" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/middleware/middlewares.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/middleware/middlewares.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/routers/commands_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routers/commands_router.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/routers/delete_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routers/delete_router.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/routers/insert_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routers/insert_router.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/routers/limits_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routers/limits_router.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/routers/register_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routers/register_router.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/routers/statistic_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routers/statistic_router.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/servises/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/servises/kb_builders/inline_kb.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/kb_builders/inline_kb.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/servises/kb_builders/reply_kb.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/kb_builders/reply_kb.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/servises/mapping/mapping.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/mapping/mapping.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/servises/report_builders/base_builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/report_builders/base_builder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/servises/report_builders/jpg_builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/report_builders/jpg_builder.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/servises/report_builders/pdf_builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/report_builders/pdf_builder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/servises/report_builders/xls_builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/report_builders/xls_builder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/servises/report_builders/xlsx_builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/report_builders/xlsx_builder.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/servises/report_builders/xml_builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/report_builders/xml_builder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/static/texts.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/static/texts.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/servises/texts/texts.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/texts/texts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/servises/validators/validators.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/validators/validators.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/app_initializer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/init_db.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/kafka.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/db/alembic/env.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/alembic/env.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/db/connector.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/connector.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/db/models/base_expense.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/models/base_expense.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/db/models/expense_articles.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/models/expense_articles.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/db/models/monthly_limits.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/models/monthly_limits.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/db/repositories/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/repositories/base.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/db/repositories/expense_articles.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/repositories/expense_articles.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/docker/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/db/repositories/monthly_limits.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/repositories/monthly_limits.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/db/repositories/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/repositories/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/bot_services.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/notification_services.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/stats_services.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/validation_services.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/tests/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/tests/test_api.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/tests/test_services.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/utils/cache.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/utils/helpers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/utils/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/logger.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" afterPath="$PROJECT_DIR$/poetry.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
     </list>
@@ -58,11 +98,12 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/nick/PycharmProjects/ExpenseAccountingBot/docker&quot;
+    &quot;last_opened_file_path&quot;: &quot;/home/nick/PycharmProjects/ExpenseAccountingBot/app/api/static&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/api/static" />
       <recent name="$PROJECT_DIR$/docker" />
       <recent name="$PROJECT_DIR$/app/db/migrations" />
     </key>
@@ -190,12 +231,48 @@
       <option name="project" value="LOCAL" />
       <updated>1735190266750</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="MVP is ready">
+      <option name="closed" value="true" />
+      <created>1737437921323</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1737437921323</updated>
+    </task>
+    <task id="LOCAL-00008" summary="black is done">
+      <option name="closed" value="true" />
+      <created>1737438499755</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1737438499755</updated>
+    </task>
+    <task id="LOCAL-00009" summary="no kafka anymore">
+      <option name="closed" value="true" />
+      <created>1737438531980</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1737438531980</updated>
+    </task>
+    <task id="LOCAL-00010" summary="isort is done">
+      <option name="closed" value="true" />
+      <created>1737438658014</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1737438658014</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="First step for this project" />
-    <option name="LAST_COMMIT_MESSAGE" value="First step for this project" />
+    <MESSAGE value="MVP is ready" />
+    <MESSAGE value="black is done" />
+    <MESSAGE value="no kafka anymore" />
+    <MESSAGE value="isort is done" />
+    <option name="LAST_COMMIT_MESSAGE" value="isort is done" />
   </component>
 </project>
