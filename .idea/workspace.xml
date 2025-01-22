@@ -4,61 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50ab5273-8ace-44c9-80bc-7f1c6833176c" name="Changes" comment="isort is done">
+    <list default="true" id="50ab5273-8ace-44c9-80bc-7f1c6833176c" name="Changes" comment="Господи Иисусе, добавил аннотацию и докстринги с помощью ИИ">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/bot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/controller/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/controller/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/controller/base_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/controller/base_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/controller/expenses_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/controller/expenses_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/controller/limits_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/controller/limits_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/controller/report_controllers/fast_report.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/controller/report_controllers/fast_report.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/controller/report_controllers/parametrized_report.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/controller/report_controllers/parametrized_report.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/controller/statistic_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/controller/statistic_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/controller/user_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/controller/user_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/dependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/.flake8" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/middleware/middlewares.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/middleware/middlewares.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/routers/commands_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routers/commands_router.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/routers/delete_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routers/delete_router.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/routers/insert_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routers/insert_router.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/routers/limits_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routers/limits_router.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/routers/register_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routers/register_router.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/routers/statistic_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routers/statistic_router.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/servises/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/servises/kb_builders/inline_kb.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/kb_builders/inline_kb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/servises/kb_builders/reply_kb.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/kb_builders/reply_kb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/servises/mapping/mapping.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/mapping/mapping.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/servises/report_builders/base_builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/report_builders/base_builder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/servises/report_builders/pdf_builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/report_builders/pdf_builder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/servises/report_builders/xlsx_builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/report_builders/xlsx_builder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/servises/report_builders/xml_builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/report_builders/xml_builder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/servises/texts/texts.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/texts/texts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/servises/validators/validators.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/validators/validators.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/core/app_initializer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/core/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/core/init_db.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/core/kafka.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/db/alembic/env.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/alembic/env.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/db/connector.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/connector.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/db/models/base_expense.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/models/base_expense.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/db/models/expense_articles.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/models/expense_articles.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/db/models/monthly_limits.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/models/monthly_limits.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/db/repositories/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/repositories/base.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/db/repositories/expense_articles.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/repositories/expense_articles.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/db/repositories/monthly_limits.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/repositories/monthly_limits.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/db/repositories/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/repositories/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/bot_services.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/notification_services.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/stats_services.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/validation_services.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/tests/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/tests/test_api.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/tests/test_services.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/cache.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/helpers.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/logger.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" afterPath="$PROJECT_DIR$/poetry.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/db/alembic/versions/c229574018c1_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/alembic/versions/c229574018c1_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/db/alembic/versions/third_migration.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -263,7 +212,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737438658014</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Господи Иисусе, добавил аннотацию и докстринги с помощью ИИ">
+      <option name="closed" value="true" />
+      <created>1737519117700</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1737519117700</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -273,6 +230,7 @@
     <MESSAGE value="black is done" />
     <MESSAGE value="no kafka anymore" />
     <MESSAGE value="isort is done" />
-    <option name="LAST_COMMIT_MESSAGE" value="isort is done" />
+    <MESSAGE value="Господи Иисусе, добавил аннотацию и докстринги с помощью ИИ" />
+    <option name="LAST_COMMIT_MESSAGE" value="Господи Иисусе, добавил аннотацию и докстринги с помощью ИИ" />
   </component>
 </project>

@@ -180,15 +180,6 @@ def upgrade() -> None:
         sa.ForeignKeyConstraint(["user_id"], ["users.tg_id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
     )
-    # op.create_table('total',
-    # sa.Column('date', sa.DateTime(), nullable=True),
-    # sa.Column('summ', sa.DECIMAL(precision=10, scale=2), nullable=True),
-    # sa.Column('id', sa.Integer(), nullable=False),
-    # sa.Column('user_id', sa.BigInteger(), nullable=False),
-    # sa.Column('updated_at', sa.DateTime(), nullable=True),
-    # sa.ForeignKeyConstraint(['user_id'], ['users.tg_id'], ),
-    # sa.PrimaryKeyConstraint('id')
-    # )
     op.create_table(
         "transport",
         sa.Column("id", sa.Integer(), nullable=False),
