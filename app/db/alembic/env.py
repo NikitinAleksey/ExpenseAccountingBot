@@ -1,14 +1,11 @@
 import os
 from logging.config import fileConfig
 
-from dotenv import load_dotenv
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
-
 from alembic import context
+from dotenv import load_dotenv
+from sqlalchemy import engine_from_config, pool
 
 from app.db.models.base import Base
-
 
 load_dotenv()
 
@@ -19,9 +16,14 @@ postgres_host = os.getenv("POSTGRES_HOST")
 postgres_port = os.getenv("POSTGRES_PORT")
 postgres_db_name = os.getenv("POSTGRES_DB_NAME")
 
-sqlalchemy_url = f"postgresql://{postgres_user}:{postgres_password}@{postgres_host}:{postgres_port}/{postgres_db_name}"
-
-# TODO после первого запуска и заполнения таблиц сгенерировать файл миграций
+sqlalchemy_url = (
+    f"postgresql://"
+    f"{postgres_user}:"
+    f"{postgres_password}@"
+    f"{postgres_host}:"
+    f"{postgres_port}/"
+    f"{postgres_db_name}"
+)
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -83,9 +85,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()

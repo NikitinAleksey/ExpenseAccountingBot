@@ -1,16 +1,15 @@
 import logging
-from functools import wraps
-import os
 
-
-__all__ = ['logged']
+__all__ = ["logged"]
 
 
 class AppLogger:
     def __init__(self, name: str, log_file_name: str = None, level=logging.DEBUG):
         self.logger = logging.getLogger(name)
         self.logger.setLevel(level)
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        formatter = logging.Formatter(
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        )
         console_handler = logging.StreamHandler()
         console_handler.setFormatter(formatter)
         self.logger.addHandler(console_handler)
@@ -62,20 +61,24 @@ def logged(name: str = None, log_file_name: str = None, level=logging.DEBUG):
 
     Аргументы:
         name (str, optional): Имя логгера. Если не указано, используется имя класса.
-        log_file_name (str, optional): Имя файла для записи логов. Если не указано, логи
-                                       пишутся только в консоль (по настройке AppLogger).
+        log_file_name (str, optional):
+        Имя файла для записи логов. Если не указано, логи
+        пишутся только в консоль (по настройке AppLogger).
         level (int, optional): Уровень логирования (по умолчанию DEBUG).
 
     Возвращает:
         cls: Класс с добавленным атрибутом `log`.
     """
+
     def wrapper(cls, **kwargs):
         """Декоратор для классов, добавляющий атрибут логирования cls.log."""
         logger_name = name if name else cls.__name__
-        setattr(cls, 'log', AppLogger(name=logger_name, log_file_name=log_file_name, level=level))
+        setattr(
+            cls,
+            "log",
+            AppLogger(name=logger_name, log_file_name=log_file_name, level=level),
+        )
 
         return cls
+
     return wrapper
-
-
-

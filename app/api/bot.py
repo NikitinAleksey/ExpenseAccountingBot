@@ -1,26 +1,50 @@
-from typing import Any
+from typing import Any, List, Type
 
-from aiogram import Bot, Dispatcher
-from aiogram.fsm.storage.memory import MemoryStorage, StorageKey
-from aiogram import Router, BaseMiddleware
+from aiogram import BaseMiddleware, Bot, Dispatcher, Router
+from aiogram.fsm.storage.memory import MemoryStorage
 
-
-__all__ = [
-    'create_bot'
-]
+__all__ = ["create_bot"]
 
 
-async def register_all_routers(dp: Dispatcher, routers: list[Router]):
+async def register_all_routers(dp: Dispatcher, routers: List[Router]):
+    """
+    Регистрирует все роутеры в диспетчере.
+
+    :param dp: Dispatcher - объект диспетчера для регистрации роутеров.
+    :param routers: List[Router] - список роутеров для регистрации.
+    :return: None
+    """
     for router in routers:
         dp.include_router(router=router)
 
 
-async def register_all_middleware(dp: Dispatcher, middlewares: list[BaseMiddleware], data: Any):
+async def register_all_middleware(
+    dp: Dispatcher, middlewares: List[BaseMiddleware], data: Any
+):
+    """
+    Регистрирует все миддлвары в диспетчере.
+
+    :param dp: Dispatcher - объект диспетчера для регистрации миддлваров.
+    :param middlewares: List[BaseMiddleware] - список миддлваров для регистрации.
+    :param data: Any - дополнительные данные, передаваемые миддлварам.
+    :return: None
+    """
     for middleware in middlewares:
         dp.update.middleware(middleware(data))
 
 
-async def create_bot(token: str, routers: list[Router], middlewares: list[BaseMiddleware], texts: dict):
+async def create_bot(
+    token: str, routers: List[Router], middlewares: List[BaseMiddleware], texts: dict
+):
+    """
+    Создает экземпляры бота и диспетчера с зарегистрированными роутерами и миддлварами.
+
+    :param token: str - токен для бота.
+    :param routers: List[Router] - список роутеров для регистрации.
+    :param middlewares: List[BaseMiddleware] - список миддлваров для регистрации.
+    :param texts: dict - словарь с текстами для миддлваров.
+    :return: Tuple[Bot, Dispatcher] - объекты бота и диспетчера.
+    """
     bot = Bot(token=token)
     storage = MemoryStorage()
     dp = Dispatcher(storage=storage)

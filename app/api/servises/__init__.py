@@ -1,10 +1,9 @@
-from app.api.servises.report_builders import *
-
+from app.api.servises.report_builders import (BaseBuilder, PDFBuilder,
+                                              XLSXBuilder, XMLBuilder)
 
 __all__ = [
-    'BaseBuilder',
-    'JPGBuilder',
-    'PDFBuilder',
-    'XLSXBuilder',
-    'XMLBuilder',
+    "BaseBuilder",
+    "PDFBuilder",
+    "XLSXBuilder",
+    "XMLBuilder",
 ]

@@ -1,14 +1,12 @@
-from sqlalchemy import Column, Integer, String, BigInteger
-from sqlalchemy.orm import relationship
+from sqlalchemy import BigInteger, Column, Integer, String
 
 from app.db.models.base import Base
 
-
-__all__ = ['User']
+__all__ = ["User"]
 
 
 class User(Base):
-    __tablename__ = 'users'
+    __tablename__ = "users"
 
     tg_id = Column(BigInteger, primary_key=True)
     name = Column(String(50), nullable=False)
