@@ -4,10 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50ab5273-8ace-44c9-80bc-7f1c6833176c" name="Changes" comment="Господи Иисусе, добавил аннотацию и докстринги с помощью ИИ">
+    <list default="true" id="50ab5273-8ace-44c9-80bc-7f1c6833176c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/db/alembic/versions/c229574018c1_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/alembic/versions/c229574018c1_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/db/alembic/versions/third_migration.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/controller/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/controller/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/controller/expenses_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/controller/expenses_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/controller/limits_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/controller/limits_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/controller/report_controllers/parametrized_report.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/controller/report_controllers/parametrized_report.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/routers/insert_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routers/insert_router.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/routers/register_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routers/register_router.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/routers/statistic_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routers/statistic_router.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/servises/mapping/mapping.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/mapping/mapping.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/servises/report_builders/pdf_builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/report_builders/pdf_builder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/servises/report_builders/xlsx_builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/report_builders/xlsx_builder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/servises/texts/texts.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/servises/texts/texts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/db/connector.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/connector.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/db/models/base_expense.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/models/base_expense.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/db/models/expense_articles.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/models/expense_articles.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/utils/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/logger.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,7 +234,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737519117700</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Удалил тестовую миграцию, вернул в mapping.py импорт моделей. Без него не работает globals">
+      <option name="closed" value="true" />
+      <created>1737520036452</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1737520036452</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -231,6 +253,7 @@
     <MESSAGE value="no kafka anymore" />
     <MESSAGE value="isort is done" />
     <MESSAGE value="Господи Иисусе, добавил аннотацию и докстринги с помощью ИИ" />
-    <option name="LAST_COMMIT_MESSAGE" value="Господи Иисусе, добавил аннотацию и докстринги с помощью ИИ" />
+    <MESSAGE value="Удалил тестовую миграцию, вернул в mapping.py импорт моделей. Без него не работает globals" />
+    <option name="LAST_COMMIT_MESSAGE" value="Удалил тестовую миграцию, вернул в mapping.py импорт моделей. Без него не работает globals" />
   </component>
 </project>

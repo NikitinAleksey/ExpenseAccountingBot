@@ -15,9 +15,7 @@ insert_router = Router()
 
 
 @insert_router.callback_query(F.data == "insert")
-async def insert_handler(
-    callback: CallbackQuery, state: FSMContext, texts: dict
-):
+async def insert_handler(callback: CallbackQuery, state: FSMContext, texts: dict):
     """
     Обработка запроса на добавление расходной статьи.
 
@@ -37,9 +35,7 @@ async def insert_handler(
 
 
 @insert_router.message(StateFilter(InsertStates.waiting_for_insert_item))
-async def insert_waiting_for_item(
-    message: Message, state: FSMContext, texts: dict
-):
+async def insert_waiting_for_item(message: Message, state: FSMContext, texts: dict):
     """
     Ожидание ввода статьи расхода от пользователя.
 
@@ -60,9 +56,7 @@ async def insert_waiting_for_item(
 
 
 @insert_router.message(StateFilter(InsertStates.waiting_for_insert_sum))
-async def insert_waiting_for_sum(
-    message: Message, state: FSMContext, texts: dict
-):
+async def insert_waiting_for_sum(message: Message, state: FSMContext, texts: dict):
     """
     Ожидание ввода суммы расхода от пользователя.
 

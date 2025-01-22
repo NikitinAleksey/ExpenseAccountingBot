@@ -44,4 +44,3 @@ class ExpenseLimitsArticleMapping:
                 имя поля не найдено.
         """
         return cls.data.get(article_name)
-

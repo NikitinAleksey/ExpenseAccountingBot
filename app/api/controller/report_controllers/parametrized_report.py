@@ -24,6 +24,7 @@ class ParametrizedReport:
         _limits_repository: Репозиторий для работы с лимитами.
         _limits_model: Модель лимитов.
     """
+
     _article_repository: Type[ExpenseArticleRepository] = ExpenseArticleRepository
     _limits_repository: Type[LimitsRepository] = LimitsRepository
     _limits_model: Type[MonthlyLimits] = MonthlyLimits

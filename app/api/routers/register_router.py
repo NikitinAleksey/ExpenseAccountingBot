@@ -16,9 +16,7 @@ register_router = Router()
 
 
 @register_router.message(StateFilter(TimezoneStates.waiting_for_add_timezone))
-async def choose_timezone_handler(
-        message: Message, state: FSMContext, texts: dict
-):
+async def choose_timezone_handler(message: Message, state: FSMContext, texts: dict):
     """
     Обработка выбора часового пояса при регистрации пользователя.
 
@@ -32,9 +30,7 @@ async def choose_timezone_handler(
     except ValueError as exc:
         return await message.answer(
             text=exc.__repr__(),
-            reply_markup=ReplyKeyBoard().create_kb(
-                texts["reply_buttons"]["timezones"]
-            ),
+            reply_markup=ReplyKeyBoard().create_kb(texts["reply_buttons"]["timezones"]),
         )
 
     is_new_user_registered = await UserController.register_user(
@@ -58,7 +54,7 @@ async def choose_timezone_handler(
 
 @register_router.callback_query(F.data == "change_timezone")
 async def choose_new_timezone_handler(
-        callback: CallbackQuery, state: FSMContext, texts: dict
+    callback: CallbackQuery, state: FSMContext, texts: dict
 ):
     """
     Обработка изменения часового пояса пользователя.
@@ -78,7 +74,7 @@ async def choose_new_timezone_handler(
 
 @register_router.message(StateFilter(TimezoneStates.waiting_for_change_timezone))
 async def change_user_timezone_handler(
-        message: Message, state: FSMContext, texts: dict
+    message: Message, state: FSMContext, texts: dict
 ):
     """
     Обработка изменения часового пояса пользователя.
@@ -93,13 +89,11 @@ async def change_user_timezone_handler(
     except ValueError as exc:
         return await message.answer(
             text=str(exc),
-            reply_markup=ReplyKeyBoard().create_kb(
-                texts["reply_buttons"]["timezones"]
-            ),
+            reply_markup=ReplyKeyBoard().create_kb(texts["reply_buttons"]["timezones"]),
         )
 
     if await UserController.update_user(
-            tg_id=message.from_user.id, name=message.from_user.full_name, timezone=timezone
+        tg_id=message.from_user.id, name=message.from_user.full_name, timezone=timezone
     ):
         timezone_message = texts["timezone_texts"]["done"].format(timezone=message.text)
     else:

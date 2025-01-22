@@ -22,7 +22,5 @@ class BaseArticle(Base):
     user_id = Column(Integer, ForeignKey("users.tg_id"), nullable=False)
     year = Column(Integer, nullable=False)
 
-    article_id = Column(
-        Integer, ForeignKey("expense_articles.id"), nullable=False
-    )
+    article_id = Column(Integer, ForeignKey("expense_articles.id"), nullable=False)
     summ = Column(DECIMAL(10, 2), default=0)

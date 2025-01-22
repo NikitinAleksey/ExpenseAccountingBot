@@ -12,6 +12,7 @@ __all__ = ["LimitsController"]
 @logged()
 class LimitsController(BaseController):
     """Контроллер для управления месячными лимитами пользователей."""
+
     _repository = LimitsRepository
     _model = MonthlyLimits
 

@@ -21,6 +21,7 @@ class Settings(pydantic_settings.BaseSettings):
     :param DEBUG: bool - флаг для режима отладки.
     :return: объект Settings с настройками проекта.
     """
+
     TG_BOT_TOKEN: pydantic.SecretStr
 
     POSTGRES_USER: str

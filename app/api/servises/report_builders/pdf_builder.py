@@ -47,9 +47,7 @@ class PDFBuilder(BaseBuilder):
 
         for period, df in data.items():
             story.append(Paragraph(f"{period}", heading_style))
-            story.append(
-                Spacer(1, 12)
-            )
+            story.append(Spacer(1, 12))
 
             table_data = [df.columns.to_list()] + df.values.tolist()
             total_width = doc.pagesize[0] - 80

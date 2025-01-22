@@ -7,7 +7,6 @@ from app.api.controller import BaseController
 from app.api.servises.mapping.mapping import ExpenseArticleMapping
 from app.api.servises.validators.validators import (ArticleValidator,
                                                     InsertValidator)
-
 from app.db.models import BaseArticle
 from app.db.repositories.expense_articles import ExpenseArticleRepository
 from app.utils import logged
@@ -18,6 +17,7 @@ class ExpensesController(BaseController):
     """Контроллер для работы с затратами. Служит промежуточным слоем между роутером
     и репозиторием.
     """
+
     _repository = ExpenseArticleRepository
     _model: type[BaseArticle] | None = None
 

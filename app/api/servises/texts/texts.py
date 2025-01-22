@@ -14,4 +14,3 @@ def load_texts() -> dict:
 
 
 texts = load_texts()
-

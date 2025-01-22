@@ -17,7 +17,7 @@ statistic_router = Router()
     StateFilter(StatisticStates.waiting_for_report_type), F.data == "fast_report"
 )
 async def statistic_make_fast_report(
-        callback: CallbackQuery, state: FSMContext, texts: dict
+    callback: CallbackQuery, state: FSMContext, texts: dict
 ):
     """
     Обрабатывает запрос на быстрый отчет, генерируя отчет по данным пользователя.
@@ -50,7 +50,7 @@ async def statistic_make_fast_report(
     F.data == "parametrized_report",
 )
 async def statistic_parametrized_report(
-        callback: CallbackQuery, state: FSMContext, texts: dict
+    callback: CallbackQuery, state: FSMContext, texts: dict
 ):
     """
     Обрабатывает запрос на параметризированный отчет, переходя к выбору периода.
@@ -73,7 +73,7 @@ async def statistic_parametrized_report(
     StateFilter(StatisticStates.parametrized_start_period_years)
 )
 async def statistic_start_year_handler(
-        callback: CallbackQuery, state: FSMContext, texts: dict
+    callback: CallbackQuery, state: FSMContext, texts: dict
 ):
     """
     Обрабатывает выбор года для параметризированного отчета.
@@ -109,7 +109,7 @@ async def statistic_start_year_handler(
 
 @statistic_router.message(StateFilter(StatisticStates.parametrized_start_period_months))
 async def statistic_start_month_handler(
-        message: Message, state: FSMContext, texts: dict
+    message: Message, state: FSMContext, texts: dict
 ):
     """
     Обрабатывает выбор месяца для параметризированного отчета.

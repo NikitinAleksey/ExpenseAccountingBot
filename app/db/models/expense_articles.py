@@ -39,6 +39,7 @@ class BaseArticle(Base):
     :param summ: decimal - сумма статьи расходов.
     :param updated_at: datetime - дата и время последнего обновления.
     """
+
     __abstract__ = True
 
     id = Column(Integer, primary_key=True)
@@ -67,6 +68,7 @@ class AlcoholArticle(BaseArticle):
     :param summ: decimal - сумма расходов на алкоголь.
     :param updated_at: datetime - дата и время последнего обновления.
     """
+
     __tablename__ = "alcohol"
 
 
@@ -79,6 +81,7 @@ class CharityArticle(BaseArticle):
     :param summ: decimal - сумма расходов на благотворительность.
     :param updated_at: datetime - дата и время последнего обновления.
     """
+
     __tablename__ = "charity"
 
 
@@ -91,6 +94,7 @@ class DebtsArticle(BaseArticle):
     :param summ: decimal - сумма расходов на долги.
     :param updated_at: datetime - дата и время последнего обновления.
     """
+
     __tablename__ = "debts"
 
 
@@ -103,6 +107,7 @@ class HouseholdArticle(BaseArticle):
     :param summ: decimal - сумма расходов на домашние нужды.
     :param updated_at: datetime - дата и время последнего обновления.
     """
+
     __tablename__ = "household"
 
 
@@ -115,6 +120,7 @@ class EatingOutArticle(BaseArticle):
     :param summ: decimal - сумма расходов на еду вне дома.
     :param updated_at: datetime - дата и время последнего обновления.
     """
+
     __tablename__ = "eating_out"
 
 
@@ -127,6 +133,7 @@ class HealthArticle(BaseArticle):
     :param summ: decimal - сумма расходов на здравоохранение.
     :param updated_at: datetime - дата и время последнего обновления.
     """
+
     __tablename__ = "health"
 
 
@@ -139,6 +146,7 @@ class CosmeticsAndCareArticle(BaseArticle):
     :param summ: decimal - сумма расходов на косметику и уход.
     :param updated_at: datetime - дата и время последнего обновления.
     """
+
     __tablename__ = "cosmetics_and_care"
 
 
@@ -151,6 +159,7 @@ class EducationArticle(BaseArticle):
     :param summ: decimal - сумма расходов на образование.
     :param updated_at: datetime - дата и время последнего обновления.
     """
+
     __tablename__ = "education"
 
 
@@ -163,6 +172,7 @@ class PetsArticle(BaseArticle):
     :param summ: decimal - сумма расходов на питомцев.
     :param updated_at: datetime - дата и время последнего обновления.
     """
+
     __tablename__ = "pets"
 
 
@@ -175,6 +185,7 @@ class PurchasesArticle(BaseArticle):
     :param summ: decimal - сумма расходов на покупки.
     :param updated_at: datetime - дата и время последнего обновления.
     """
+
     __tablename__ = "purchases"
 
 
@@ -187,6 +198,7 @@ class ProductsArticle(BaseArticle):
     :param summ: decimal - сумма расходов на продукты.
     :param updated_at: datetime - дата и время последнего обновления.
     """
+
     __tablename__ = "products"
 
 
@@ -199,6 +211,7 @@ class TravelArticle(BaseArticle):
     :param summ: decimal - сумма расходов на путешествия.
     :param updated_at: datetime - дата и время последнего обновления.
     """
+
     __tablename__ = "travel"
 
 
@@ -211,6 +224,7 @@ class EntertainmentArticle(BaseArticle):
     :param summ: decimal - сумма расходов на развлечения.
     :param updated_at: datetime - дата и время последнего обновления.
     """
+
     __tablename__ = "entertainment"
 
 
@@ -223,6 +237,7 @@ class FriendsAndFamilyArticle(BaseArticle):
     :param summ: decimal - сумма расходов на друзей и семью.
     :param updated_at: datetime - дата и время последнего обновления.
     """
+
     __tablename__ = "friends_and_family"
 
 
@@ -235,6 +250,7 @@ class CigarettesArticle(BaseArticle):
     :param summ: decimal - сумма расходов на сигареты.
     :param updated_at: datetime - дата и время последнего обновления.
     """
+
     __tablename__ = "cigarettes"
 
 
@@ -247,6 +263,7 @@ class SportArticle(BaseArticle):
     :param summ: decimal - сумма расходов на спорт.
     :param updated_at: datetime - дата и время последнего обновления.
     """
+
     __tablename__ = "sport"
 
 
@@ -259,6 +276,7 @@ class DevicesArticle(BaseArticle):
     :param summ: decimal - сумма расходов на устройства.
     :param updated_at: datetime - дата и время последнего обновления.
     """
+
     __tablename__ = "devices"
 
 
@@ -271,6 +289,7 @@ class TransportArticle(BaseArticle):
     :param summ: decimal - сумма расходов на транспорт.
     :param updated_at: datetime - дата и время последнего обновления.
     """
+
     __tablename__ = "transport"
 
 
@@ -283,4 +302,5 @@ class ServicesArticle(BaseArticle):
     :param summ: decimal - сумма расходов на услуги.
     :param updated_at: datetime - дата и время последнего обновления.
     """
+
     __tablename__ = "services"
